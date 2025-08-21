@@ -5,7 +5,7 @@ import java.util.List;
 public class Atlas {
     static final String SPACE = "     ";
     static final String LINE = SPACE + "____________________________________________________________";
-    private static Todo[] todoList = new Todo[100];
+    private static Item[] todoList = new Item[100];
     private static int c = 0;
     private static Scanner s = new Scanner(System.in);
     private static String s1;
@@ -49,6 +49,14 @@ public class Atlas {
         c++;
     }
 
+    public static void newEvent(String name, String from, String to) {
+        todoList[c] = new Event(name, from, to);
+        System.out.println(LINE);
+        System.out.println(SPACE + "added: " + todoList[c].toString());
+        System.out.println(LINE);
+        c++;
+    }
+
     public static void markTaskAsDone(int index) {
         todoList[index].markAsDone();
         System.out.println(LINE);
@@ -80,8 +88,20 @@ public class Atlas {
                 int index = (s1.charAt(7) - '0') - 1;
                 markTaskAsNotDone(index);
             }
-            else if (!s1.isEmpty()) {
-                newTodo(s1);
+            else if (s1.startsWith("todo")) {
+                newTodo(s1.substring(5));
+            } else if (s1.startsWith("deadline")) {
+                int i = s1.indexOf("/");
+                String name = s1.substring(9, i - 1);
+                String by = s1.substring(i + 1);
+                newDeadline(name, by);
+            } else if (s1.startsWith("event")) {
+                int i1 = s1.indexOf("/");
+                int i2 = s1.indexOf("/", i1 + 1);
+                String name = s1.substring(6, i1 - 1);
+                String from = s1.substring(i1 + 1, i2 - 1);
+                String to = s1.substring(i2 + 1);
+                newEvent(name, from, to);
             }
         }
 
