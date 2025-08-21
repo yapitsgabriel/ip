@@ -3,55 +3,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Atlas {
+    static final String SPACE = "     ";
+    static final String LINE = SPACE + "____________________________________________________________";
+    private static Todo[] todoList = new Todo[100];
+    private static int c = 0;
+    private static Scanner s = new Scanner(System.in);
+    private static String s1;
+    private static List<String> items = new ArrayList<>();
+    private static List<Boolean> done = new ArrayList<>();
+
+    public static void hello() {
+        System.out.println(LINE);
+        System.out.println(SPACE + "Hello, I'm Atlas!");
+        System.out.println(SPACE + "How can I be of help?");
+        System.out.println(LINE);
+    }
+
+    public static void bye() {
+        System.out.println(LINE);
+        System.out.println(SPACE + "Bye! See you next time :)");
+        System.out.println(LINE);
+    }
+
+    public static void printList() {
+        System.out.println(LINE);
+        for (int i = 0; i < c; i++) {
+            System.out.println(SPACE + Integer.toString(i + 1) + ". " + todoList[i].toString());
+        }
+        System.out.println(LINE);
+    }
+
+
     public static void main(String[] args) {
-        List<String> items = new ArrayList<>();
-        List<Boolean> done = new ArrayList<>();
-        int c = 0;
-        String space = "     ";
-        String line = "____________________________________________________________";
-        System.out.println(space + line);
-        System.out.println(space + "Hello, I'm Atlas.");
-        System.out.println(space + "What do you want to do today?");
-        System.out.println(space + line);
-
-        Scanner s = new Scanner(System.in);
-        String s1;
-
+        hello();
         while (true) {
             s1 = s.nextLine();
             if (s1.equals("bye")) {
-                System.out.println(space + line);
-                System.out.println(space + "Bye! See you next time :)");
-                System.out.println(space + line);
+                bye();
                 break;
             } else if (s1.equals("list")) {
-                System.out.println(space + line);
-                for (int i = 0; i < c; i++) {
-                    String num = Integer.toString(i + 1) + ". ";
-                    if (done.get(i)) {
-                        System.out.println(space + num + "[X] " + items.get(i));
-                    } else {
-                        System.out.println(space + num + "[ ] " + items.get(i));
-                    }
-                }
-                System.out.println(space + line);
+                printList();
             } else if (s1.matches("^mark \\d+$")) {
-                done.set((int) (s1.charAt(5) - '0') - 1, true);
-                System.out.println();
+                int index = (s1.charAt(5) - '0') - 1;
+                todoList[index].markAsDone();
+                System.out.println(LINE);
+                System.out.println(SPACE + todoList[index].toString());
+                System.out.println(LINE);
             } else if (s1.matches("^unmark \\d+$")) {
-                done.set((int) (s1.charAt(5) - '0') - 1, false);
+                int index = (s1.charAt(7) - '0') - 1;
+                todoList[index].markAsNotDone();
+                System.out.println(LINE);
+                System.out.println(SPACE + todoList[index].toString());
+                System.out.println(LINE);
             }
-            else if (!s1.isEmpty()){
+            else if (!s1.isEmpty()) {
+                todoList[c] = new Todo(s1);
+                System.out.println(LINE);
+                System.out.println(SPACE + "added: " + todoList[c].toString());
+                System.out.println(LINE);
                 c++;
-                System.out.println(space + line);
-                System.out.println(space + "added: [ ] " + s1);
-                System.out.println(space + line);
-                items.add(s1);
-                done.add(false);
-            } else {
-
             }
-
         }
 
     }
