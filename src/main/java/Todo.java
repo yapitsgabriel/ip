@@ -21,9 +21,9 @@ public class Todo {
     @Override
     public String toString() {
         if (isDone) {
-            return "[X] " + name;
+            return "[T] [X] " + name;
         } else {
-            return "[ ] " + name;
+            return "[T] [ ] " + name;
         }
     }
 }

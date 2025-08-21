@@ -33,6 +33,36 @@ public class Atlas {
         System.out.println(LINE);
     }
 
+    public static void newTodo(String name) {
+        todoList[c] = new Todo(name);
+        System.out.println(LINE);
+        System.out.println(SPACE + "added: " + todoList[c].toString());
+        System.out.println(LINE);
+        c++;
+    }
+
+    public static void newDeadline(String name, String by) {
+        todoList[c] = new Deadline(name, by);
+        System.out.println(LINE);
+        System.out.println(SPACE + "added: " + todoList[c].toString());
+        System.out.println(LINE);
+        c++;
+    }
+
+    public static void markTaskAsDone(int index) {
+        todoList[index].markAsDone();
+        System.out.println(LINE);
+        System.out.println(SPACE + todoList[index].toString());
+        System.out.println(LINE);
+    }
+
+    public static void markTaskAsNotDone(int index) {
+        todoList[index].markAsNotDone();
+        System.out.println(LINE);
+        System.out.println(SPACE + todoList[index].toString());
+        System.out.println(LINE);
+    }
+
 
     public static void main(String[] args) {
         hello();
@@ -45,23 +75,13 @@ public class Atlas {
                 printList();
             } else if (s1.matches("^mark \\d+$")) {
                 int index = (s1.charAt(5) - '0') - 1;
-                todoList[index].markAsDone();
-                System.out.println(LINE);
-                System.out.println(SPACE + todoList[index].toString());
-                System.out.println(LINE);
+                markTaskAsDone(index);
             } else if (s1.matches("^unmark \\d+$")) {
                 int index = (s1.charAt(7) - '0') - 1;
-                todoList[index].markAsNotDone();
-                System.out.println(LINE);
-                System.out.println(SPACE + todoList[index].toString());
-                System.out.println(LINE);
+                markTaskAsNotDone(index);
             }
             else if (!s1.isEmpty()) {
-                todoList[c] = new Todo(s1);
-                System.out.println(LINE);
-                System.out.println(SPACE + "added: " + todoList[c].toString());
-                System.out.println(LINE);
-                c++;
+                newTodo(s1);
             }
         }
 
