@@ -6,7 +6,7 @@ public class Atlas {
     static final String SPACE = "     ";
     static final String BIGSPACE = "        ";
     static final String LINE = "    " + "____________________________________________________________";
-    private static Item[] todoList = new Item[100];
+    private static Item[] itemList = new Item[100];
     private static int c = 0;
     private static Scanner s = new Scanner(System.in);
     private static String input;
@@ -30,7 +30,7 @@ public class Atlas {
         System.out.println(LINE);
         System.out.println(SPACE + "Here are the tasks in your list:");
         for (int i = 0; i < c; i++) {
-            System.out.println(SPACE + Integer.toString(i + 1) + ". " + todoList[i].toString());
+            System.out.println(BIGSPACE + Integer.toString(i + 1) + ". " + itemList[i].toString());
         }
         System.out.println(LINE);
     }
@@ -41,10 +41,10 @@ public class Atlas {
         }
         String name = input.substring(5);
 
-        todoList[c] = new Todo(name);
+        itemList[c] = new Todo(name);
         System.out.println(LINE);
         System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + todoList[c].toString());
+        System.out.println(BIGSPACE + itemList[c].toString());
         c++;
         System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
         System.out.println(LINE);
@@ -69,10 +69,10 @@ public class Atlas {
         String by = input.substring(i + 4);
 
         // Create task
-        todoList[c] = new Deadline(name, by);
+        itemList[c] = new Deadline(name, by);
         System.out.println(LINE);
         System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + todoList[c].toString());
+        System.out.println(BIGSPACE + itemList[c].toString());
         c++;
         System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
         System.out.println(LINE);
@@ -104,29 +104,40 @@ public class Atlas {
         }
         String to = input.substring(i2 + 4);
 
-        todoList[c] = new Event(name, from, to);
+        itemList[c] = new Event(name, from, to);
         System.out.println(LINE);
         System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + todoList[c].toString());
+        System.out.println(BIGSPACE + itemList[c].toString());
         c++;
         System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
         System.out.println(LINE);
     }
 
     public static void markTaskAsDone(int index) {
-        todoList[index].markAsDone();
+        itemList[index].markAsDone();
         System.out.println(LINE);
         System.out.println(SPACE + "Nice! I've marked this task as done:");
-        System.out.println(BIGSPACE + todoList[index].toString());
+        System.out.println(BIGSPACE + itemList[index].toString());
         System.out.println(LINE);
     }
 
     public static void markTaskAsNotDone(int index) {
-        todoList[index].markAsNotDone();
+        itemList[index].markAsNotDone();
         System.out.println(LINE);
         System.out.println(SPACE + "Okay, I've marked this task as not done yet:");
-        System.out.println(BIGSPACE + todoList[index].toString());
+        System.out.println(BIGSPACE + itemList[index].toString());
         System.out.println(LINE);
+    }
+
+    public static void deleteItem(int index) {
+        System.out.println(LINE);
+        System.out.println(SPACE + "Okay, I've deleted this task: ");
+        System.out.println(BIGSPACE + itemList[index].toString());
+        System.out.println(LINE);
+        for (int i = index; i < c - 1; i++) {
+            itemList[i] = itemList[i + 1];
+        }
+        c--;
     }
 
     public static void main(String[] args){
@@ -144,12 +155,15 @@ public class Atlas {
             } else if (input.matches("^unmark \\d+$")) {
                 int index = (input.charAt(7) - '0') - 1;
                 markTaskAsNotDone(index);
+            } else if (input.matches("^delete \\d+$")) {
+                int index = (input.charAt(7) - '0') - 1;
+                deleteItem(index);
             } else if (input.startsWith("todo")) {
                 try {
                     newTodo(input);
                 } catch (EmptyException e) {
                     System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your todo.");
+                    System.out.println("     Oops! Remember to include the details for your item.");
                     System.out.println("    ____________________________________________________________");
                 }
 
@@ -158,7 +172,7 @@ public class Atlas {
                     newDeadline(input);
                 } catch (EmptyException e) {
                     System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your todo.");
+                    System.out.println("     Oops! Remember to include the details for your item.");
                     System.out.println("    ____________________________________________________________");
                 } catch (DeadlineDateException e) {
                     System.out.println("    ____________________________________________________________");
@@ -171,7 +185,7 @@ public class Atlas {
                     newEvent(input);
                 } catch (EmptyException e) {
                     System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your todo.");
+                    System.out.println("     Oops! Remember to include the details for your item.");
                     System.out.println("    ____________________________________________________________");
                 } catch (EventDateException e) {
                     System.out.println("    ____________________________________________________________");
