@@ -4,14 +4,13 @@ import java.util.List;
 
 public class Atlas {
     static final String SPACE = "     ";
-    static final String BIGSPACE = "        ";
-    static final String LINE = "    " + "____________________________________________________________";
-    private static Item[] itemList = new Item[100];
+    static final String BIGSPACE = SPACE + "   ";
+    static final String LINE = "    " + "______________________________________________________________";
+    private static List<Item> itemList = new ArrayList<Item>();
     private static int c = 0;
     private static Scanner s = new Scanner(System.in);
     private static String input;
-    private static List<String> items = new ArrayList<>();
-    private static List<Boolean> done = new ArrayList<>();
+
 
     public static void hello() {
         System.out.println(LINE);
@@ -28,9 +27,9 @@ public class Atlas {
 
     public static void printList() {
         System.out.println(LINE);
-        System.out.println(SPACE + "Here are the tasks in your list:");
+        System.out.println(SPACE + "Here are the items in your list:");
         for (int i = 0; i < c; i++) {
-            System.out.println(BIGSPACE + Integer.toString(i + 1) + ". " + itemList[i].toString());
+            System.out.println(BIGSPACE + Integer.toString(i + 1) + ". " + itemList.get(i).toString());
         }
         System.out.println(LINE);
     }
@@ -41,12 +40,12 @@ public class Atlas {
         }
         String name = input.substring(5);
 
-        itemList[c] = new Todo(name);
+        itemList.add(new Todo(name));
         System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + itemList[c].toString());
+        System.out.println(SPACE + "Got it! I've added this item:");
+        System.out.println(BIGSPACE + itemList.get(c).toString());
         c++;
-        System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
+        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
         System.out.println(LINE);
     }
 
@@ -68,13 +67,13 @@ public class Atlas {
         }
         String by = input.substring(i + 4);
 
-        // Create task
-        itemList[c] = new Deadline(name, by);
+        // Create item
+        itemList.add(new Deadline(name, by));
         System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + itemList[c].toString());
+        System.out.println(SPACE + "Got it! I've added this item:");
+        System.out.println(BIGSPACE + itemList.get(c).toString());
         c++;
-        System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
+        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
         System.out.println(LINE);
     }
 
@@ -104,38 +103,38 @@ public class Atlas {
         }
         String to = input.substring(i2 + 4);
 
-        itemList[c] = new Event(name, from, to);
+        itemList.add(new Event(name, from, to));
         System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this task:");
-        System.out.println(BIGSPACE + itemList[c].toString());
+        System.out.println(SPACE + "Got it! I've added this item:");
+        System.out.println(BIGSPACE + itemList.get(c).toString());
         c++;
-        System.out.println(SPACE + "Now you have " + c + " task(s) in the list.");
+        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
         System.out.println(LINE);
     }
 
-    public static void markTaskAsDone(int index) {
-        itemList[index].markAsDone();
+    public static void markitemAsDone(int index) {
+        itemList.get(index).markAsDone();
         System.out.println(LINE);
-        System.out.println(SPACE + "Nice! I've marked this task as done:");
-        System.out.println(BIGSPACE + itemList[index].toString());
+        System.out.println(SPACE + "Nice! I've marked this item as done:");
+        System.out.println(BIGSPACE + itemList.get(index).toString());
         System.out.println(LINE);
     }
 
-    public static void markTaskAsNotDone(int index) {
-        itemList[index].markAsNotDone();
+    public static void markitemAsNotDone(int index) {
+        itemList.get(index).markAsNotDone();
         System.out.println(LINE);
-        System.out.println(SPACE + "Okay, I've marked this task as not done yet:");
-        System.out.println(BIGSPACE + itemList[index].toString());
+        System.out.println(SPACE + "Okay, I've marked this item as not done yet:");
+        System.out.println(BIGSPACE + itemList.get(index).toString());
         System.out.println(LINE);
     }
 
     public static void deleteItem(int index) {
         System.out.println(LINE);
-        System.out.println(SPACE + "Okay, I've deleted this task: ");
-        System.out.println(BIGSPACE + itemList[index].toString());
+        System.out.println(SPACE + "Okay, I've deleted this item: ");
+        System.out.println(BIGSPACE + itemList.get(index).toString());
         System.out.println(LINE);
         for (int i = index; i < c - 1; i++) {
-            itemList[i] = itemList[i + 1];
+            itemList.set(i, itemList.get(i + 1));
         }
         c--;
     }
@@ -151,10 +150,10 @@ public class Atlas {
                 printList();
             } else if (input.matches("^mark \\d+$")) {
                 int index = (input.charAt(5) - '0') - 1;
-                markTaskAsDone(index);
+                markitemAsDone(index);
             } else if (input.matches("^unmark \\d+$")) {
                 int index = (input.charAt(7) - '0') - 1;
-                markTaskAsNotDone(index);
+                markitemAsNotDone(index);
             } else if (input.matches("^delete \\d+$")) {
                 int index = (input.charAt(7) - '0') - 1;
                 deleteItem(index);
@@ -162,41 +161,48 @@ public class Atlas {
                 try {
                     newTodo(input);
                 } catch (EmptyException e) {
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your item.");
-                    System.out.println("    ____________________________________________________________");
+                    System.out.println(LINE);
+                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
+                    System.out.println(LINE);
                 }
 
             } else if (input.startsWith("deadline")) {
                 try {
                     newDeadline(input);
                 } catch (EmptyException e) {
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your item.");
-                    System.out.println("    ____________________________________________________________");
+                    System.out.println(LINE);
+                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
+                    System.out.println(LINE);
                 } catch (DeadlineDateException e) {
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Please follow the following format:");
-                    System.out.println("     deadline <task name> /by <deadline>");
-                    System.out.println("    ____________________________________________________________");
+                    System.out.println(LINE);
+                    System.out.println(SPACE + "Oops! Please follow the following format:");
+                    System.out.println(SPACE + "deadline <item name> /by <deadline>");
+                    System.out.println(LINE);
                 }
             } else if (input.startsWith("event")) {
                 try {
                     newEvent(input);
                 } catch (EmptyException e) {
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Remember to include the details for your item.");
-                    System.out.println("    ____________________________________________________________");
+                    System.out.println(LINE);
+                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
+                    System.out.println(LINE);
                 } catch (EventDateException e) {
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Oops! Please follow the following format:");
-                    System.out.println("     event <task name> /from <start date> /to <end date>");
-                    System.out.println("    ____________________________________________________________");
+                    System.out.println(LINE);
+                    System.out.println(SPACE + "Oops! Please follow the following format:");
+                    System.out.println(SPACE + "event <item name> /from <start date> /to <end date>");
+                    System.out.println(LINE);
                 }
             } else {
-                System.out.println("    ____________________________________________________________");
-                System.out.println("     I don't understand what you mean. Please type in something that you wanna achieve.");
-                System.out.println("    ____________________________________________________________");
+                System.out.println(LINE);
+                System.out.println(SPACE + "I don't understand what you mean. You can try these prompts: ");
+                System.out.println(SPACE + "• list");
+                System.out.println(SPACE + "• todo <item name>");
+                System.out.println(SPACE + "• deadline <item name> /by <deadline>");
+                System.out.println(SPACE + "• event <item name> /from <start date> /to <end date>");
+                System.out.println(SPACE + "• mark <item number>");
+                System.out.println(SPACE + "• unmark <item number>");
+                System.out.println(SPACE + "• delete <item number>");
+                System.out.println(LINE);
             }
         }
     }
