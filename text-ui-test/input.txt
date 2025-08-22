@@ -1,0 +1,8 @@
+todo read more
+deadline read 2 books /by next week
+event reading club /from Monday 2pm /to Monday 4pm
+mark 1
+mark 2
+unmark 1
+list
+bye
