@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Atlas {
     static final String SPACE = "     ";
-    static final String BIGSPACE = SPACE + "   ";
     static final String LINE = "    " + "______________________________________________________________";
+    static final String BIGSPACE = SPACE + "   ";
     private static List<Item> itemList = new ArrayList<Item>();
     private static int c = 0;
     private static Scanner s = new Scanner(System.in);
@@ -161,36 +161,19 @@ public class Atlas {
                 try {
                     newTodo(input);
                 } catch (EmptyException e) {
-                    System.out.println(LINE);
-                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
-                    System.out.println(LINE);
                 }
 
             } else if (input.startsWith("deadline")) {
                 try {
                     newDeadline(input);
                 } catch (EmptyException e) {
-                    System.out.println(LINE);
-                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
-                    System.out.println(LINE);
                 } catch (DeadlineDateException e) {
-                    System.out.println(LINE);
-                    System.out.println(SPACE + "Oops! Please follow the following format:");
-                    System.out.println(SPACE + "deadline <item name> /by <deadline>");
-                    System.out.println(LINE);
                 }
             } else if (input.startsWith("event")) {
                 try {
                     newEvent(input);
                 } catch (EmptyException e) {
-                    System.out.println(LINE);
-                    System.out.println(SPACE + "Oops! Remember to include the details for your item.");
-                    System.out.println(LINE);
                 } catch (EventDateException e) {
-                    System.out.println(LINE);
-                    System.out.println(SPACE + "Oops! Please follow the following format:");
-                    System.out.println(SPACE + "event <item name> /from <start date> /to <end date>");
-                    System.out.println(LINE);
                 }
             } else {
                 System.out.println(LINE);
