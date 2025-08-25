@@ -61,17 +61,26 @@ public class Atlas {
                 try {
                     newTodo(input);
                 } catch (EmptyException e) {
+                    printLine();
+                    System.out.println(e.getMessage());
+                    printLine();
                 }
 
             } else if (input.startsWith("deadline")) {
                 try {
                     newDeadline(input);
                 } catch (EmptyException | DeadlineDateException e) {
+                    printLine();
+                    System.out.println(e.getMessage());
+                    printLine();
                 }
             } else if (input.startsWith("event")) {
                 try {
                     newEvent(input);
                 } catch (EmptyException | EventDateException e) {
+                    printLine();
+                    System.out.println(e.getMessage());
+                    printLine();
                 }
             } else {
                 printHelpMenu();
