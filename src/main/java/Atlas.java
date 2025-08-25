@@ -25,6 +25,19 @@ public class Atlas {
         System.out.println(LINE);
     }
 
+    public static void printHelpMenu() {
+        System.out.println(LINE);
+        System.out.println(SPACE + "I don't understand what you mean. You can try these prompts: ");
+        System.out.println(SPACE + "• list");
+        System.out.println(SPACE + "• todo <item name>");
+        System.out.println(SPACE + "• deadline <item name> /by <deadline>");
+        System.out.println(SPACE + "• event <item name> /from <start date> /to <end date>");
+        System.out.println(SPACE + "• mark <item number>");
+        System.out.println(SPACE + "• unmark <item number>");
+        System.out.println(SPACE + "• delete <item number>");
+        System.out.println(LINE);
+    }
+
     public static void printList() {
         System.out.println(LINE);
         System.out.println(SPACE + "Here are the items in your list:");
@@ -176,16 +189,7 @@ public class Atlas {
                 } catch (EventDateException e) {
                 }
             } else {
-                System.out.println(LINE);
-                System.out.println(SPACE + "I don't understand what you mean. You can try these prompts: ");
-                System.out.println(SPACE + "• list");
-                System.out.println(SPACE + "• todo <item name>");
-                System.out.println(SPACE + "• deadline <item name> /by <deadline>");
-                System.out.println(SPACE + "• event <item name> /from <start date> /to <end date>");
-                System.out.println(SPACE + "• mark <item number>");
-                System.out.println(SPACE + "• unmark <item number>");
-                System.out.println(SPACE + "• delete <item number>");
-                System.out.println(LINE);
+                printHelpMenu();
             }
         }
     }
