@@ -3,156 +3,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Atlas {
-    static final String SPACE = "     ";
-    static final String LINE = "    " + "______________________________________________________________";
-    static final String BIGSPACE = SPACE + "   ";
-    private static List<Item> itemList = new ArrayList<Item>();
-    private static int c = 0;
-    private static Scanner s = new Scanner(System.in);
-    private static String input;
+    private List<Item> itemList;
+    private int c;
+    private Scanner s;
+    private String input;
 
-
-    public static void hello() {
-        System.out.println(LINE);
-        System.out.println(SPACE + "Hello, I'm Atlas!");
-        System.out.println(SPACE + "What do you want to do?");
-        System.out.println(LINE);
+    public Atlas () {
+        this.itemList = new ArrayList<Item>();
+        this.c = 0;
+        this.s = new Scanner(System.in);
     }
 
-    public static void bye() {
-        System.out.println(LINE);
-        System.out.println(SPACE + "Bye! See you next time :)");
-        System.out.println(LINE);
+    public static void printLine() {
+        System.out.println("    ______________________________________________________________");
     }
 
-    public static void printHelpMenu() {
-        System.out.println(LINE);
-        System.out.println(SPACE + "I don't understand what you mean. You can try these prompts: ");
-        System.out.println(SPACE + "• list");
-        System.out.println(SPACE + "• todo <item name>");
-        System.out.println(SPACE + "• deadline <item name> /by <deadline>");
-        System.out.println(SPACE + "• event <item name> /from <start date> /to <end date>");
-        System.out.println(SPACE + "• mark <item number>");
-        System.out.println(SPACE + "• unmark <item number>");
-        System.out.println(SPACE + "• delete <item number>");
-        System.out.println(LINE);
+    public static void smallSpace(String message) {
+        System.out.println("     " + message);
     }
 
-    public static void printList() {
-        System.out.println(LINE);
-        System.out.println(SPACE + "Here are the items in your list:");
-        for (int i = 0; i < c; i++) {
-            System.out.println(BIGSPACE + Integer.toString(i + 1) + ". " + itemList.get(i).toString());
-        }
-        System.out.println(LINE);
+    public static void bigSpace(String message) {
+        System.out.println("        " + message);
     }
 
-    public static void newTodo(String input) throws EmptyException {
-        if (input.length() < 6) {
-            throw new EmptyException();
-        }
-        String name = input.substring(5);
-
-        itemList.add(new Todo(name));
-        System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this item:");
-        System.out.println(BIGSPACE + itemList.get(c).toString());
-        c++;
-        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
-        System.out.println(LINE);
+    public void hello() {
+        printLine();
+        smallSpace("Hello, I'm Atlas!");
+        smallSpace("What do you want to do?");
+        printLine();
     }
 
-    public static void newDeadline(String input) throws EmptyException, DeadlineDateException {
-        if (input.length() < 10) {
-            throw new EmptyException();
-        } else if (!input.contains(" /by ")) {
-            throw new DeadlineDateException();
-        }
-
-        // Get name
-        int i = input.indexOf("/");
-        String name = input.substring(9, i - 1);
-
-        // Get by
-        String rest = input.substring(i);
-        if (rest.length() < 5) {
-            throw new DeadlineDateException();
-        }
-        String by = input.substring(i + 4);
-
-        // Create item
-        itemList.add(new Deadline(name, by));
-        System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this item:");
-        System.out.println(BIGSPACE + itemList.get(c).toString());
-        c++;
-        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
-        System.out.println(LINE);
+    public void bye() {
+        printLine();
+        smallSpace("Bye! See you next time :)");
+        printLine();
     }
 
-    public static void newEvent(String input) throws EmptyException, EventDateException {
-        if (input.length() < 7) {
-            throw new EmptyException();
-        } else if (!(input.contains(" /from ") && input.contains(" /to "))) {
-            throw new EventDateException();
-        }
-
-        // Get name
-        int i1 = input.indexOf("/");
-        int i2 = input.indexOf("/", i1 + 1);
-        String name = input.substring(6, i1 - 1);
-
-        // Get from
-        String rest = input.substring(i1);
-        if (rest.length() < 7) {
-            throw new EventDateException();
-        }
-        String from = input.substring(i1 + 6, i2 - 1);
-
-        // Get to
-        rest = input.substring(i2);
-        if (rest.length() < 5) {
-            throw new EventDateException();
-        }
-        String to = input.substring(i2 + 4);
-
-        itemList.add(new Event(name, from, to));
-        System.out.println(LINE);
-        System.out.println(SPACE + "Got it! I've added this item:");
-        System.out.println(BIGSPACE + itemList.get(c).toString());
-        c++;
-        System.out.println(SPACE + "Now you have " + c + " item(s) in the list.");
-        System.out.println(LINE);
-    }
-
-    public static void markitemAsDone(int index) {
-        itemList.get(index).markAsDone();
-        System.out.println(LINE);
-        System.out.println(SPACE + "Nice! I've marked this item as done:");
-        System.out.println(BIGSPACE + itemList.get(index).toString());
-        System.out.println(LINE);
-    }
-
-    public static void markitemAsNotDone(int index) {
-        itemList.get(index).markAsNotDone();
-        System.out.println(LINE);
-        System.out.println(SPACE + "Okay, I've marked this item as not done yet:");
-        System.out.println(BIGSPACE + itemList.get(index).toString());
-        System.out.println(LINE);
-    }
-
-    public static void deleteItem(int index) {
-        System.out.println(LINE);
-        System.out.println(SPACE + "Okay, I've deleted this item: ");
-        System.out.println(BIGSPACE + itemList.get(index).toString());
-        System.out.println(LINE);
-        for (int i = index; i < c - 1; i++) {
-            itemList.set(i, itemList.get(i + 1));
-        }
-        c--;
-    }
-
-    public static void main(String[] args){
+    public void run() {
         hello();
         while (true) {
             input = s.nextLine();
@@ -179,18 +66,148 @@ public class Atlas {
             } else if (input.startsWith("deadline")) {
                 try {
                     newDeadline(input);
-                } catch (EmptyException e) {
-                } catch (DeadlineDateException e) {
+                } catch (EmptyException | DeadlineDateException e) {
                 }
             } else if (input.startsWith("event")) {
                 try {
                     newEvent(input);
-                } catch (EmptyException e) {
-                } catch (EventDateException e) {
+                } catch (EmptyException | EventDateException e) {
                 }
             } else {
                 printHelpMenu();
             }
         }
+    }
+
+    public void printHelpMenu() {
+        printLine();
+        smallSpace("I don't understand what you mean. You can try these prompts: ");
+        smallSpace("• list");
+        smallSpace("• todo <item name>");
+        smallSpace("• deadline <item name> /by <deadline>");
+        smallSpace("• event <item name> /from <start date> /to <end date>");
+        smallSpace("• mark <item number>");
+        smallSpace("• unmark <item number>");
+        smallSpace("• delete <item number>");
+        printLine();
+    }
+
+    public void printList() {
+        printLine();
+        smallSpace("Here are the items in your list:");
+        for (int i = 0; i < c; i++) {
+            bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
+        }
+        printLine();
+    }
+
+    public void newTodo(String input) throws EmptyException {
+        if (input.length() < 6) {
+            throw new EmptyException();
+        }
+        String name = input.substring(5);
+
+        itemList.add(new Todo(name));
+        printLine();
+        smallSpace("Got it! I've added this item:");
+        bigSpace(itemList.get(c).toString());
+        c++;
+        smallSpace("Now you have " + c + " item(s) in the list.");
+        printLine();
+    }
+
+    public void newDeadline(String input) throws EmptyException, DeadlineDateException {
+        if (input.length() < 10) {
+            throw new EmptyException();
+        } else if (!input.contains(" /by ")) {
+            throw new DeadlineDateException();
+        }
+
+        // Get name
+        int i = input.indexOf("/");
+        String name = input.substring(9, i - 1);
+
+        // Get by
+        String rest = input.substring(i);
+        if (rest.length() < 5) {
+            throw new DeadlineDateException();
+        }
+        String by = input.substring(i + 4);
+
+        // Create item
+        itemList.add(new Deadline(name, by));
+        printLine();
+        smallSpace("Got it! I've added this item:");
+        bigSpace(itemList.get(c).toString());
+        c++;
+        smallSpace("Now you have " + c + " item(s) in the list.");
+        printLine();
+    }
+
+    public void newEvent(String input) throws EmptyException, EventDateException {
+        if (input.length() < 7) {
+            throw new EmptyException();
+        } else if (!(input.contains(" /from ") && input.contains(" /to "))) {
+            throw new EventDateException();
+        }
+
+        // Get name
+        int i1 = input.indexOf("/");
+        int i2 = input.indexOf("/", i1 + 1);
+        String name = input.substring(6, i1 - 1);
+
+        // Get from
+        String rest = input.substring(i1);
+        if (rest.length() < 7) {
+            throw new EventDateException();
+        }
+        String from = input.substring(i1 + 6, i2 - 1);
+
+        // Get to
+        rest = input.substring(i2);
+        if (rest.length() < 5) {
+            throw new EventDateException();
+        }
+        String to = input.substring(i2 + 4);
+
+        itemList.add(new Event(name, from, to));
+        printLine();
+        smallSpace("Got it! I've added this item:");
+        bigSpace(itemList.get(c).toString());
+        c++;
+        smallSpace("Now you have " + c + " item(s) in the list.");
+        printLine();
+    }
+
+    public void markitemAsDone(int index) {
+        itemList.get(index).markAsDone();
+        printLine();
+        smallSpace("Nice! I've marked this item as done:");
+        bigSpace(itemList.get(index).toString());
+        printLine();
+    }
+
+    public void markitemAsNotDone(int index) {
+        itemList.get(index).markAsNotDone();
+        printLine();
+        smallSpace("Okay, I've marked this item as not done yet:");
+        bigSpace( itemList.get(index).toString());
+        printLine();
+    }
+
+    public void deleteItem(int index) {
+        printLine();
+        smallSpace("Okay, I've deleted this item: ");
+        bigSpace(itemList.get(index).toString());
+        printLine();
+        for (int i = index; i < c - 1; i++) {
+            itemList.set(i, itemList.get(i + 1));
+        }
+        c--;
+    }
+
+    public static void main(String[] args){
+        Atlas atlas = new Atlas();
+        atlas.run();
     }
 }
