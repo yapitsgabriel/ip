@@ -4,13 +4,11 @@ import java.util.List;
 
 public class Atlas {
     private List<Item> itemList;
-    private int c;
     private Scanner s;
     private String input;
 
     public Atlas () {
         this.itemList = new ArrayList<Item>();
-        this.c = 0;
         this.s = new Scanner(System.in);
     }
 
@@ -106,7 +104,7 @@ public class Atlas {
     public void printList() {
         printLine();
         smallSpace("Here are the items in your list:");
-        for (int i = 0; i < c; i++) {
+        for (int i = 0; i < itemList.size(); i++) {
             bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
         }
         printLine();
@@ -121,9 +119,8 @@ public class Atlas {
         itemList.add(new Todo(name));
         printLine();
         smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(c).toString());
-        c++;
-        smallSpace("Now you have " + c + " item(s) in the list.");
+        bigSpace(itemList.get(itemList.size() - 1).toString());
+        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
         printLine();
     }
 
@@ -149,9 +146,8 @@ public class Atlas {
         itemList.add(new Deadline(name, by));
         printLine();
         smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(c).toString());
-        c++;
-        smallSpace("Now you have " + c + " item(s) in the list.");
+        bigSpace(itemList.get(itemList.size() - 1).toString());
+        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
         printLine();
     }
 
@@ -184,9 +180,8 @@ public class Atlas {
         itemList.add(new Event(name, from, to));
         printLine();
         smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(c).toString());
-        c++;
-        smallSpace("Now you have " + c + " item(s) in the list.");
+        bigSpace(itemList.get(itemList.size() - 1).toString());
+        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
         printLine();
     }
 
@@ -211,10 +206,7 @@ public class Atlas {
         smallSpace("Okay, I've deleted this item: ");
         bigSpace(itemList.get(index).toString());
         printLine();
-        for (int i = index; i < c - 1; i++) {
-            itemList.set(i, itemList.get(i + 1));
-        }
-        c--;
+        itemList.remove(index);
     }
 
     public static void main(String[] args){
