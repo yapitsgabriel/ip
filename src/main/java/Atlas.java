@@ -186,6 +186,11 @@ public class Atlas {
     }
 
     public void markitemAsDone(int index) {
+        if (index < 0 || index > itemList.size() - 1) {
+            printLine();
+            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            return;
+        }
         itemList.get(index).markAsDone();
         printLine();
         smallSpace("Nice! I've marked this item as done:");
@@ -194,6 +199,11 @@ public class Atlas {
     }
 
     public void markitemAsNotDone(int index) {
+        if (index < 0 || index > itemList.size() - 1) {
+            printLine();
+            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            return;
+        }
         itemList.get(index).markAsNotDone();
         printLine();
         smallSpace("Okay, I've marked this item as not done yet:");
@@ -202,6 +212,11 @@ public class Atlas {
     }
 
     public void deleteItem(int index) {
+        if (index < 0 || index > itemList.size() - 1) {
+            printLine();
+            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            return;
+        }
         printLine();
         smallSpace("Okay, I've deleted this item: ");
         bigSpace(itemList.get(index).toString());
