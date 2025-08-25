@@ -49,13 +49,15 @@ public class Atlas {
             } else if (input.equals("list")) {
                 printList();
             } else if (input.matches("^mark \\d+$")) {
-                int index = (input.charAt(5) - '0') - 1;
+                int index = Integer.parseInt(input.substring(5)) - 1;
                 markitemAsDone(index);
             } else if (input.matches("^unmark \\d+$")) {
-                int index = (input.charAt(7) - '0') - 1;
+                int index = Integer.parseInt(input.substring(7)) - 1;
+
                 markitemAsNotDone(index);
             } else if (input.matches("^delete \\d+$")) {
-                int index = (input.charAt(7) - '0') - 1;
+                int index = Integer.parseInt(input.substring(7)) - 1;
+
                 deleteItem(index);
             } else if (input.startsWith("todo")) {
                 try {
