@@ -103,9 +103,13 @@ public class Atlas {
 
     public void printList() {
         printLine();
-        smallSpace("Here are the items in your list:");
-        for (int i = 0; i < itemList.size(); i++) {
-            bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
+        if (itemList.size() == 0) {
+            smallSpace("There are no more items in your list!");
+        } else {
+            smallSpace("Here are the items in your list:");
+            for (int i = 0; i < itemList.size(); i++) {
+                bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
+            }
         }
         printLine();
     }
