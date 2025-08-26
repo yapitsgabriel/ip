@@ -75,6 +75,7 @@ public class Atlas {
         } else if (input.startsWith("todo")) {
             try {
                 newTodo(input);
+                printTodo();
             } catch (EmptyException e) {
                 printLine();
                 System.out.println(e.getMessage());
@@ -84,6 +85,7 @@ public class Atlas {
         } else if (input.startsWith("deadline")) {
             try {
                 newDeadline(input);
+                printTodo();
             } catch (EmptyException | DeadlineDateException e) {
                 printLine();
                 System.out.println(e.getMessage());
@@ -92,6 +94,7 @@ public class Atlas {
         } else if (input.startsWith("event")) {
             try {
                 newEvent(input);
+                printTodo();
             } catch (EmptyException | EventDateException e) {
                 printLine();
                 System.out.println(e.getMessage());
@@ -143,6 +146,9 @@ public class Atlas {
         }
 
         itemList.add(new Todo(name));
+    }
+
+    public void printTodo() {
         printLine();
         smallSpace("Got it! I've added this item:");
         bigSpace(itemList.get(itemList.size() - 1).toString());
@@ -170,11 +176,6 @@ public class Atlas {
 
         // Create item
         itemList.add(new Deadline(name, by));
-        printLine();
-        smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(itemList.size() - 1).toString());
-        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
-        printLine();
     }
 
     public void newEvent(String input) throws EmptyException, EventDateException {
@@ -204,11 +205,6 @@ public class Atlas {
         String to = input.substring(i2 + 4);
 
         itemList.add(new Event(name, from, to));
-        printLine();
-        smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(itemList.size() - 1).toString());
-        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
-        printLine();
     }
 
     public void markitemAsDone(int index) {
