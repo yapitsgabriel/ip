@@ -56,54 +56,57 @@ public class Atlas {
         }
     }
 
+    public void readInput(String input) {
+        if (input.equals("bye")) {
+            bye();
+        } else if (input.equals("list")) {
+            printList();
+        } else if (input.matches("^mark \\d+$")) {
+            int index = Integer.parseInt(input.substring(5)) - 1;
+            markitemAsDone(index);
+        } else if (input.matches("^unmark \\d+$")) {
+            int index = Integer.parseInt(input.substring(7)) - 1;
+
+            markitemAsNotDone(index);
+        } else if (input.matches("^delete \\d+$")) {
+            int index = Integer.parseInt(input.substring(7)) - 1;
+
+            deleteItem(index);
+        } else if (input.startsWith("todo")) {
+            try {
+                newTodo(input);
+            } catch (EmptyException e) {
+                printLine();
+                System.out.println(e.getMessage());
+                printLine();
+            }
+
+        } else if (input.startsWith("deadline")) {
+            try {
+                newDeadline(input);
+            } catch (EmptyException | DeadlineDateException e) {
+                printLine();
+                System.out.println(e.getMessage());
+                printLine();
+            }
+        } else if (input.startsWith("event")) {
+            try {
+                newEvent(input);
+            } catch (EmptyException | EventDateException e) {
+                printLine();
+                System.out.println(e.getMessage());
+                printLine();
+            }
+        } else {
+            printHelpMenu();
+        }
+    }
+
     public void run() {
         hello();
         while (true) {
             input = s.nextLine();
-            if (input.equals("bye")) {
-                bye();
-                break;
-            } else if (input.equals("list")) {
-                printList();
-            } else if (input.matches("^mark \\d+$")) {
-                int index = Integer.parseInt(input.substring(5)) - 1;
-                markitemAsDone(index);
-            } else if (input.matches("^unmark \\d+$")) {
-                int index = Integer.parseInt(input.substring(7)) - 1;
-
-                markitemAsNotDone(index);
-            } else if (input.matches("^delete \\d+$")) {
-                int index = Integer.parseInt(input.substring(7)) - 1;
-
-                deleteItem(index);
-            } else if (input.startsWith("todo")) {
-                try {
-                    newTodo(input);
-                } catch (EmptyException e) {
-                    printLine();
-                    System.out.println(e.getMessage());
-                    printLine();
-                }
-
-            } else if (input.startsWith("deadline")) {
-                try {
-                    newDeadline(input);
-                } catch (EmptyException | DeadlineDateException e) {
-                    printLine();
-                    System.out.println(e.getMessage());
-                    printLine();
-                }
-            } else if (input.startsWith("event")) {
-                try {
-                    newEvent(input);
-                } catch (EmptyException | EventDateException e) {
-                    printLine();
-                    System.out.println(e.getMessage());
-                    printLine();
-                }
-            } else {
-                printHelpMenu();
-            }
+            readInput(input);
         }
     }
 
