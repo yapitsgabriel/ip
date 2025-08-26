@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class Atlas {
         System.out.println("        " + message);
     }
 
-    public void run() {
+    public void run() throws IOException {
         hello();
         try {
             load();
@@ -51,10 +54,11 @@ public class Atlas {
         printLine();
     }
 
-    public void bye() {
+    public void bye() throws IOException {
         printLine();
         smallSpace("Bye! See you next time :)");
         printLine();
+        save();
     }
 
     public void load() throws IOException {
@@ -69,41 +73,43 @@ public class Atlas {
 
         while (s.hasNext()) {
             String nextLine =s.nextLine();
-            if (nextLine.startsWith("T")) {
-                loadTodo(nextLine);
-            } else if (nextLine.startsWith("D")) {
-                loadDeadline(nextLine);
-            } else if (nextLine.startsWith("E")) {
-                loadEvent(nextLine);
+            loadItem(nextLine);
+
+        }
+    }
+
+    public void loadItem(String nextLine) {
+        if (nextLine.startsWith("T")) {
+            String[] parts = nextLine.split(Pattern.quote("|"));
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].trim();
             }
+            itemList.add(new Todo(Integer.parseInt(parts[1]), parts[2]));
+        } else if (nextLine.startsWith("D")) {
+            String[] parts = nextLine.split(Pattern.quote("|"));
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].trim();
+            }
+            itemList.add(new Deadline(Integer.parseInt(parts[1]), parts[2], parts[3]));
+        } else if (nextLine.startsWith("E")) {
+            String[] parts = nextLine.split(Pattern.quote("|"));
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].trim();
+            }
+            itemList.add(new Event(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]));
         }
     }
 
-    public void loadTodo(String nextLine) {
-        String[] parts = nextLine.split(Pattern.quote("|"));
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
+    public void save() throws IOException {
+        FileWriter f = new FileWriter("data/atlas_temp.txt", false);
+        for (Item item : itemList) {
+            f.write(item.fileFormat() + "\n");
         }
-        itemList.add(new Todo(Integer.parseInt(parts[1]), parts[2]));
+        f.close();
+        Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public void loadDeadline(String nextLine) {
-        String[] parts = nextLine.split(Pattern.quote("|"));
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
-        itemList.add(new Deadline(Integer.parseInt(parts[1]), parts[2], parts[3]));
-    }
-
-    public void loadEvent(String nextLine) {
-        String[] parts = nextLine.split(Pattern.quote("|"));
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
-        itemList.add(new Event(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]));
-    }
-
-    public void readInput(String input) {
+    public void readInput(String input) throws IOException {
         if (input.equals("bye")) {
             bye();
         } else if (input.equals("list")) {

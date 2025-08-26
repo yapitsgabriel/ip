@@ -1,4 +1,4 @@
-public class Item {
+public abstract class Item {
     protected String name;
     protected int isDone;
 
@@ -23,6 +23,8 @@ public class Item {
     public int checkDone() {
         return this.isDone;
     }
+
+    public abstract String fileFormat();
 
     @Override
     public String toString() {

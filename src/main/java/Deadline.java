@@ -12,6 +12,11 @@ public class Deadline extends Item{
     }
 
     @Override
+    public String fileFormat() {
+        return "T | " + this.isDone + " | " + this.name + " | " + this.by;
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }

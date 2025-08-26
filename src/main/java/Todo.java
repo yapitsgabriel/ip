@@ -9,6 +9,12 @@ public class Todo extends Item {
     }
 
     @Override
+    public String fileFormat() {
+        return "T | " + this.isDone + " | " + this.name;
+    }
+
+
+    @Override
     public String toString() {
         return "[T]" + super.toString();
     }

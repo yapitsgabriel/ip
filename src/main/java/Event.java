@@ -15,6 +15,11 @@ public class Event extends Item{
     }
 
     @Override
+    public String fileFormat() {
+        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to;
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to;
     }
