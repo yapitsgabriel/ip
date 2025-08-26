@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Atlas {
     private List<Item> itemList;
@@ -26,6 +27,21 @@ public class Atlas {
 
     public static void bigSpace(String message) {
         System.out.println("        " + message);
+    }
+
+    public void run() {
+        hello();
+        try {
+            load();
+        } catch (IOException e) {
+            printLine();
+            smallSpace(e.getMessage());
+            printLine();
+        }
+        while (true) {
+            input = s.nextLine();
+            readInput(input);
+        }
     }
 
     public void hello() {
@@ -52,8 +68,39 @@ public class Atlas {
         Scanner s = new Scanner(f);
 
         while (s.hasNext()) {
-
+            String nextLine =s.nextLine();
+            if (nextLine.startsWith("T")) {
+                loadTodo(nextLine);
+            } else if (nextLine.startsWith("D")) {
+                loadDeadline(nextLine);
+            } else if (nextLine.startsWith("E")) {
+                loadEvent(nextLine);
+            }
         }
+    }
+
+    public void loadTodo(String nextLine) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        itemList.add(new Todo(Integer.parseInt(parts[1]), parts[2]));
+    }
+
+    public void loadDeadline(String nextLine) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        itemList.add(new Deadline(Integer.parseInt(parts[1]), parts[2], parts[3]));
+    }
+
+    public void loadEvent(String nextLine) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        itemList.add(new Event(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]));
     }
 
     public void readInput(String input) {
@@ -105,36 +152,6 @@ public class Atlas {
         }
     }
 
-    public void run() {
-        hello();
-        while (true) {
-            input = s.nextLine();
-            readInput(input);
-        }
-    }
-
-    public void printHelpMenu() {
-        printLine();
-        smallSpace("I don't understand what you mean. You can try these prompts: ");
-        smallSpace("• list");
-        smallSpace("• todo <item name>");
-        smallSpace("• deadline <item name> /by <deadline>");
-        smallSpace("• event <item name> /from <start date> /to <end date>");
-        smallSpace("• mark <item number>");
-        smallSpace("• unmark <item number>");
-        smallSpace("• delete <item number>");
-        printLine();
-    }
-
-    public void printList() {
-        printLine();
-        smallSpace("Here are the items in your list:");
-        for (int i = 0; i < itemList.size(); i++) {
-            bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
-        }
-        printLine();
-    }
-
     public void newTodo(String input) throws EmptyException {
         if (input.length() < 6) {
             throw new EmptyException();
@@ -146,14 +163,6 @@ public class Atlas {
         }
 
         itemList.add(new Todo(name));
-    }
-
-    public void printTodo() {
-        printLine();
-        smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(itemList.size() - 1).toString());
-        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
-        printLine();
     }
 
     public void newDeadline(String input) throws EmptyException, DeadlineDateException {
@@ -246,7 +255,37 @@ public class Atlas {
         itemList.remove(index);
     }
 
-    public static void main(String[] args){
+    public void printHelpMenu() {
+        printLine();
+        smallSpace("I don't understand what you mean. You can try these prompts: ");
+        smallSpace("• list");
+        smallSpace("• todo <item name>");
+        smallSpace("• deadline <item name> /by <deadline>");
+        smallSpace("• event <item name> /from <start date> /to <end date>");
+        smallSpace("• mark <item number>");
+        smallSpace("• unmark <item number>");
+        smallSpace("• delete <item number>");
+        printLine();
+    }
+
+    public void printList() {
+        printLine();
+        smallSpace("Here are the items in your list:");
+        for (int i = 0; i < itemList.size(); i++) {
+            bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
+        }
+        printLine();
+    }
+
+    public void printTodo() {
+        printLine();
+        smallSpace("Got it! I've added this item:");
+        bigSpace(itemList.get(itemList.size() - 1).toString());
+        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
+        printLine();
+    }
+
+    public static void main(String[] args) throws IOException {
         Atlas atlas = new Atlas();
         atlas.run();
     }

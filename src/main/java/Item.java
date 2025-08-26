@@ -1,26 +1,32 @@
 public class Item {
     protected String name;
-    protected boolean isDone;
+    protected int isDone;
 
-    public Item(String name) {
+    public Item (String name) {
+        this.isDone = 0;
+        this.name = name;
+    }
+
+    public Item(int isDone, String name) {
+        this.isDone = isDone;
         this.name = name;
     }
 
     public void markAsDone() {
-        this.isDone = true;
+            this.isDone = 1;
     }
 
     public void markAsNotDone() {
-        this.isDone = false;
+        this.isDone = 0;
     }
 
-    public boolean checkDone() {
+    public int checkDone() {
         return this.isDone;
     }
 
     @Override
     public String toString() {
-        if (isDone) {
+        if (isDone == 1) {
             return "[X] " + name;
         } else {
             return "[ ] " + name;

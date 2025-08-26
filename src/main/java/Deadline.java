@@ -6,6 +6,11 @@ public class Deadline extends Item{
         this.by = by;
     }
 
+    public Deadline(int isDone, String name, String by) {
+        super(isDone, name);
+        this.by = by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
