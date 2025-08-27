@@ -13,15 +13,15 @@ public class ItemList {
         this.itemList = itemList;
     }
 
-    public void newTodo(String input) throws EmptyException {
+    public void newTodo(String input) throws EmptyTaskNameException {
         itemList.add(ItemParser.parseTodo(input));
     }
 
-    public void newDeadline(String input) throws EmptyException, DeadlineDateException {
+    public void newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
         itemList.add(ItemParser.parseDeadline(input));
     }
 
-    public void newEvent(String input) throws EmptyException, EventDateException {
+    public void newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         itemList.add(ItemParser.parseEvent(input));
     }
 
@@ -90,6 +90,15 @@ public class ItemList {
         ItemPrinter.smallSpace("Got it! I've added this item:");
         ItemPrinter.bigSpace(this.getItem(this.listSize() - 1).toString());
         ItemPrinter.smallSpace("Now you have " + this.listSize() + " item(s) in the list.");
+        ItemPrinter.printLine();
+    }
+
+    public void printToday() {
+        ItemPrinter.printLine();
+        ItemPrinter.smallSpace("Here are your items for today:");
+        for (int i = 0; i < this.listSize(); i++) {
+            ItemPrinter.bigSpace(Integer.toString(i + 1) + ". " + this.getItem(i).toString());
+        }
         ItemPrinter.printLine();
     }
 }

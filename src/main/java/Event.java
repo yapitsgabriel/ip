@@ -1,14 +1,16 @@
-public class Event extends Item {
-    protected String from;
-    protected String to;
+import java.time.LocalDateTime;
 
-    public Event(String name, String from, String to) {
+public class Event extends Item {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
         this.from = from;
         this.to = to;
     }
 
-    public Event(int isDone, String name, String from, String to) {
+    public Event(int isDone, String name, LocalDateTime from, LocalDateTime to) {
         super(isDone, name);
         this.from = from;
         this.to = to;
@@ -16,11 +18,11 @@ public class Event extends Item {
 
     @Override
     public String fileFormat() {
-        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to;
+        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to.toString();
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to;
+        return "[E]" + super.toString() + " (from: " + ItemParser.printDate(from) + " to: " + ItemParser.printDate(to);
     }
 }
