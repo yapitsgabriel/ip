@@ -2,6 +2,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class ItemParser {
 
@@ -26,18 +27,21 @@ public class ItemParser {
         }
 
         // Get name
-        int i = input.indexOf("/");
-        String name = input.substring(9, i - 1);
+        String[] parts = input.split(Pattern.quote(" /from "));
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
 
-        // Get by
-        String rest = input.substring(i);
-        if (rest.length() < 5) {
+        String name = parts[0];
+        String byText = parts[1];
+
+        if (name.isEmpty() || byText.isEmpty()) {
             throw new InvalidFormatDeadlineException();
         }
-        String by = input.substring(i + 4);
-        LocalDateTime byDT = parseDate(by);
 
-        return new Deadline(name, byDT);
+        LocalDateTime by = parseDate(byText);
+
+        return new Deadline(name, by);
     }
 
     public static Item parseEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
@@ -48,31 +52,30 @@ public class ItemParser {
         }
 
         // Get name
-        int i1 = input.indexOf("/");
-        int i2 = input.indexOf("/", i1 + 1);
-        String name = input.substring(6, i1 - 1);
+        String[] parts = input.split(Pattern.quote(" /from "));
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        String name = parts[0];
+        String[] parts2 = parts[1].split(Pattern.quote(" /to "));
+        for (int i = 0; i < parts.length; i++) {
+            parts2[i] = parts2[i].trim();
+        }
+        String fromText = parts2[0];
+        String toText = parts2[1];
 
-        // Get from
-        String rest = input.substring(i1);
-        if (rest.length() < 7) {
+        if (name.isEmpty() || fromText.isEmpty() | toText.isEmpty()) {
             throw new InvalidFormatEventException();
         }
-        String from = input.substring(i1 + 6, i2 - 1);
-        LocalDateTime fromDT = parseDate(from);
 
-        // Get to
-        rest = input.substring(i2);
-        if (rest.length() < 5) {
-            throw new InvalidFormatEventException();
-        }
-        String to = input.substring(i2 + 4);
-        LocalDateTime toDT = parseDate(to);
+        LocalDateTime from = parseDate(fromText);
+        LocalDateTime to = parseDate(toText);
 
-        if (fromDT.isAfter(toDT)) {
+        if (from.isAfter(to)) {
             throw new InvalidDateRangeException();
         }
 
-        return new Event(name, fromDT, toDT);
+        return new Event(name, from, to);
     }
 
     public static LocalDateTime parseDate(String input) throws InvalidDateFormatException, PastDateException {

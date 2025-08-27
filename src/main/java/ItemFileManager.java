@@ -45,13 +45,26 @@ public class ItemFileManager {
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
-            itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3])));
+            try {
+                itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3])));
+            } catch (InvalidDateFormatException | PastDateException e) {
+                ItemPrinter.printLine();
+                ItemPrinter.smallSpace(e.getMessage());
+                ItemPrinter.printLine();
+            }
+
         } else if (nextLine.startsWith("E")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
-            itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3]), ItemParser.parseDate(parts[4])));
+            try {
+                itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3]), ItemParser.parseDate(parts[4])));
+            } catch (InvalidDateFormatException | PastDateException e) {
+                ItemPrinter.printLine();
+                ItemPrinter.smallSpace(e.getMessage());
+                ItemPrinter.printLine();
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 public class InvalidDateFormatException extends Exception{
     public InvalidDateFormatException() {
-        super("Date must be in the format dd/MM/yyyy HH:mm");
+        super("Please enter a valid date in the format dd/MM/yyyy HH:mm");
     }
 }

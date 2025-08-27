@@ -92,4 +92,13 @@ public class ItemList {
         ItemPrinter.smallSpace("Now you have " + this.listSize() + " item(s) in the list.");
         ItemPrinter.printLine();
     }
+
+    public void printToday() {
+        ItemPrinter.printLine();
+        ItemPrinter.smallSpace("Here are your items for today:");
+        for (int i = 0; i < this.listSize(); i++) {
+            ItemPrinter.bigSpace(Integer.toString(i + 1) + ". " + this.getItem(i).toString());
+        }
+        ItemPrinter.printLine();
+    }
 }
