@@ -21,7 +21,7 @@ public class ItemPrinter {
         ItemPrinter.printLine();
     }
 
-    public static void bye() throws IOException {
+    public static void bye() {
         ItemPrinter.printLine();
         ItemPrinter.smallSpace("Bye! See you next time :)");
         ItemPrinter.printLine();

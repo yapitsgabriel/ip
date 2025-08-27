@@ -13,15 +13,15 @@ public class ItemList {
         this.itemList = itemList;
     }
 
-    public void newTodo(String input) throws EmptyException {
+    public void newTodo(String input) throws EmptyTaskNameException {
         itemList.add(ItemParser.parseTodo(input));
     }
 
-    public void newDeadline(String input) throws EmptyException, DeadlineDateException {
+    public void newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
         itemList.add(ItemParser.parseDeadline(input));
     }
 
-    public void newEvent(String input) throws EmptyException, EventDateException {
+    public void newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         itemList.add(ItemParser.parseEvent(input));
     }
 

@@ -13,7 +13,7 @@ public class Atlas {
         this.itemList = new ItemList();
     }
 
-    public void run() throws IOException {
+    public void run(){
         String input;
         ItemPrinter.hello();
         try {
@@ -29,7 +29,8 @@ public class Atlas {
         }
     }
 
-    public void readInput(String input) throws IOException {
+    public void readInput(String input) {
+        input = input.trim();
         if (input.equals("bye")) {
             ItemPrinter.bye();
             itemFileManager.save(itemList);
@@ -40,38 +41,35 @@ public class Atlas {
             itemList.markitemAsDone(index);
         } else if (input.matches("^unmark \\d+$")) {
             int index = Integer.parseInt(input.substring(7)) - 1;
-
             itemList.markitemAsNotDone(index);
         } else if (input.matches("^delete \\d+$")) {
             int index = Integer.parseInt(input.substring(7)) - 1;
-
             itemList.deleteItem(index);
         } else if (input.startsWith("todo")) {
             try {
                 itemList.newTodo(input);
                 itemList.printTodo();
-            } catch (EmptyException e) {
+            } catch (EmptyTaskNameException e) {
                 ItemPrinter.printLine();
-                System.out.println(e.getMessage());
+                ItemPrinter.smallSpace(e.getMessage());
                 ItemPrinter.printLine();
             }
-
         } else if (input.startsWith("deadline")) {
             try {
                 itemList.newDeadline(input);
                 itemList.printTodo();
-            } catch (EmptyException | DeadlineDateException e) {
+            } catch (EmptyTaskNameException | InvalidFormatDeadlineException | InvalidDateFormatException | PastDateException e) {
                 ItemPrinter.printLine();
-                System.out.println(e.getMessage());
+                ItemPrinter.smallSpace(e.getMessage());
                 ItemPrinter.printLine();
             }
         } else if (input.startsWith("event")) {
             try {
                 itemList.newEvent(input);
                 itemList.printTodo();
-            } catch (EmptyException | EventDateException e) {
+            } catch (EmptyTaskNameException | InvalidFormatEventException | InvalidDateFormatException | PastDateException | InvalidDateRangeException e) {
                 ItemPrinter.printLine();
-                System.out.println(e.getMessage());
+                ItemPrinter.smallSpace(e.getMessage());
                 ItemPrinter.printLine();
             }
         } else {
@@ -79,7 +77,7 @@ public class Atlas {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Atlas atlas = new Atlas();
         atlas.run();
     }

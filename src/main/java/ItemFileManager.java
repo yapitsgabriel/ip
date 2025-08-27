@@ -55,15 +55,23 @@ public class ItemFileManager {
         }
     }
 
-    public void save(ItemList itemList) throws IOException {
+    public void save(ItemList itemList){
         this.itemList = itemList;
 
-        FileWriter f = new FileWriter("data/atlas_temp.txt", false);
-        for (int i = 0; i < itemList.listSize(); i++) {
-            f.write(itemList.getItem(i).fileFormat() + "\n");
+        try {
+            FileWriter f = new FileWriter("data/atlas_temp.txt", false);
+            for (int i = 0; i < itemList.listSize(); i++) {
+                f.write(itemList.getItem(i).fileFormat() + "\n");
+            }
+            f.close();
+            Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            ItemPrinter.printLine();
+            ItemPrinter.smallSpace("There was an error saving the file.");
+            ItemPrinter.printLine();
         }
-        f.close();
-        Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
+
+
     }
 
 
