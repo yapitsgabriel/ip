@@ -1,4 +1,4 @@
-public class Event extends Item{
+public class Event extends Item {
     protected String from;
     protected String to;
 

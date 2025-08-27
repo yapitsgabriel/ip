@@ -2,7 +2,7 @@ public abstract class Item {
     protected String name;
     protected int isDone;
 
-    public Item (String name) {
+    public Item(String name) {
         this.isDone = 0;
         this.name = name;
     }
