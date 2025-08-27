@@ -4,7 +4,33 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class ItemParser {
+public class Parser {
+
+    public static Command parseCommand(String input) {
+        input = input.trim();
+        if (input.equals("bye")) {
+            return new ByeCommand();
+        } else if (input.equals("list")) {
+            return new ListCommand();
+        } else if (input.matches("^mark \\d+$")) {
+            int index = Integer.parseInt(input.substring(5)) - 1;
+            return new MarkCommand(index);
+        } else if (input.matches("^unmark \\d+$")) {
+            int index = Integer.parseInt(input.substring(7)) - 1;
+            return new UnmarkCommand(index);
+        } else if (input.matches("^delete \\d+$")) {
+            int index = Integer.parseInt(input.substring(7)) - 1;
+            return new DeleteCommand(index);
+        } else if (input.startsWith("todo")) {
+            return new NewTodoCommand(input);
+        } else if (input.startsWith("deadline")) {
+            return new NewDeadlineCommand(input);
+        } else if (input.startsWith("event")) {
+            return new NewEventCommand(input);
+        } else {
+            return new HelpCommand();
+        }
+    }
 
     public static Item parseTodo(String input) throws EmptyTaskNameException {
         if (input.length() < 6) {
@@ -27,7 +53,7 @@ public class ItemParser {
         }
 
         // Get name
-        String[] parts = input.split(Pattern.quote(" /from "));
+        String[] parts = input.split(Pattern.quote(" /by "));
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
         }

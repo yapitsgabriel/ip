@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class ItemFileManager {
+public class Storage {
     private ItemList itemList;
 
-    public ItemFileManager() {
+    public Storage() {
         this.itemList = new ItemList();
     }
 
@@ -46,11 +44,11 @@ public class ItemFileManager {
                 parts[i] = parts[i].trim();
             }
             try {
-                itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3])));
+                itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                ItemPrinter.printLine();
-                ItemPrinter.smallSpace(e.getMessage());
-                ItemPrinter.printLine();
+                Ui.printLine();
+                Ui.smallSpace(e.getMessage());
+                Ui.printLine();
             }
 
         } else if (nextLine.startsWith("E")) {
@@ -59,11 +57,11 @@ public class ItemFileManager {
                 parts[i] = parts[i].trim();
             }
             try {
-                itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], ItemParser.parseDate(parts[3]), ItemParser.parseDate(parts[4])));
+                itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                ItemPrinter.printLine();
-                ItemPrinter.smallSpace(e.getMessage());
-                ItemPrinter.printLine();
+                Ui.printLine();
+                Ui.smallSpace(e.getMessage());
+                Ui.printLine();
             }
         }
     }
@@ -79,9 +77,9 @@ public class ItemFileManager {
             f.close();
             Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            ItemPrinter.printLine();
-            ItemPrinter.smallSpace("There was an error saving the file.");
-            ItemPrinter.printLine();
+            Ui.printLine();
+            Ui.smallSpace("There was an error saving the file.");
+            Ui.printLine();
         }
 
 
