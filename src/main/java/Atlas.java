@@ -13,33 +13,22 @@ import java.util.regex.Pattern;
 public class Atlas {
     private List<Item> itemList;
     private Scanner s;
-    private String input;
 
     public Atlas () {
         this.itemList = new ArrayList<Item>();
         this.s = new Scanner(System.in);
     }
 
-    public static void printLine() {
-        System.out.println("    ______________________________________________________________");
-    }
-
-    public static void smallSpace(String message) {
-        System.out.println("     " + message);
-    }
-
-    public static void bigSpace(String message) {
-        System.out.println("        " + message);
-    }
 
     public void run() throws IOException {
+        String input;
         hello();
         try {
             load();
         } catch (IOException e) {
-            printLine();
-            smallSpace(e.getMessage());
-            printLine();
+            Printer.printLine();
+            Printer.smallSpace(e.getMessage());
+            Printer.printLine();
         }
         while (true) {
             input = s.nextLine();
@@ -48,16 +37,16 @@ public class Atlas {
     }
 
     public void hello() {
-        printLine();
-        smallSpace("Hello, I'm Atlas!");
-        smallSpace("What do you want to do?");
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Hello, I'm Atlas!");
+        Printer.smallSpace("What do you want to do?");
+        Printer.printLine();
     }
 
     public void bye() throws IOException {
-        printLine();
-        smallSpace("Bye! See you next time :)");
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Bye! See you next time :)");
+        Printer.printLine();
         save();
     }
 
@@ -130,9 +119,9 @@ public class Atlas {
                 newTodo(input);
                 printTodo();
             } catch (EmptyException e) {
-                printLine();
+                Printer.printLine();
                 System.out.println(e.getMessage());
-                printLine();
+                Printer.printLine();
             }
 
         } else if (input.startsWith("deadline")) {
@@ -140,18 +129,18 @@ public class Atlas {
                 newDeadline(input);
                 printTodo();
             } catch (EmptyException | DeadlineDateException e) {
-                printLine();
+                Printer.printLine();
                 System.out.println(e.getMessage());
-                printLine();
+                Printer.printLine();
             }
         } else if (input.startsWith("event")) {
             try {
                 newEvent(input);
                 printTodo();
             } catch (EmptyException | EventDateException e) {
-                printLine();
+                Printer.printLine();
                 System.out.println(e.getMessage());
-                printLine();
+                Printer.printLine();
             }
         } else {
             printHelpMenu();
@@ -224,71 +213,71 @@ public class Atlas {
 
     public void markitemAsDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            printLine();
-            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Printer.printLine();
+            Printer.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
         itemList.get(index).markAsDone();
-        printLine();
-        smallSpace("Nice! I've marked this item as done:");
-        bigSpace(itemList.get(index).toString());
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Nice! I've marked this item as done:");
+        Printer.bigSpace(itemList.get(index).toString());
+        Printer.printLine();
     }
 
     public void markitemAsNotDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            printLine();
-            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Printer.printLine();
+            Printer.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
         itemList.get(index).markAsNotDone();
-        printLine();
-        smallSpace("Okay, I've marked this item as not done yet:");
-        bigSpace( itemList.get(index).toString());
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Okay, I've marked this item as not done yet:");
+        Printer.bigSpace( itemList.get(index).toString());
+        Printer.printLine();
     }
 
     public void deleteItem(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            printLine();
-            smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Printer.printLine();
+            Printer.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
-        printLine();
-        smallSpace("Okay, I've deleted this item: ");
-        bigSpace(itemList.get(index).toString());
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Okay, I've deleted this item: ");
+        Printer.bigSpace(itemList.get(index).toString());
+        Printer.printLine();
         itemList.remove(index);
     }
 
     public void printHelpMenu() {
-        printLine();
-        smallSpace("I don't understand what you mean. You can try these prompts: ");
-        smallSpace("• list");
-        smallSpace("• todo <item name>");
-        smallSpace("• deadline <item name> /by <deadline>");
-        smallSpace("• event <item name> /from <start date> /to <end date>");
-        smallSpace("• mark <item number>");
-        smallSpace("• unmark <item number>");
-        smallSpace("• delete <item number>");
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("I don't understand what you mean. You can try these prompts: ");
+        Printer.smallSpace("• list");
+        Printer.smallSpace("• todo <item name>");
+        Printer.smallSpace("• deadline <item name> /by <deadline>");
+        Printer.smallSpace("• event <item name> /from <start date> /to <end date>");
+        Printer.smallSpace("• mark <item number>");
+        Printer.smallSpace("• unmark <item number>");
+        Printer.smallSpace("• delete <item number>");
+        Printer.printLine();
     }
 
     public void printList() {
-        printLine();
-        smallSpace("Here are the items in your list:");
+        Printer.printLine();
+        Printer.smallSpace("Here are the items in your list:");
         for (int i = 0; i < itemList.size(); i++) {
-            bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
+            Printer.bigSpace(Integer.toString(i + 1) + ". " + itemList.get(i).toString());
         }
-        printLine();
+        Printer.printLine();
     }
 
     public void printTodo() {
-        printLine();
-        smallSpace("Got it! I've added this item:");
-        bigSpace(itemList.get(itemList.size() - 1).toString());
-        smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
-        printLine();
+        Printer.printLine();
+        Printer.smallSpace("Got it! I've added this item:");
+        Printer.bigSpace(itemList.get(itemList.size() - 1).toString());
+        Printer.smallSpace("Now you have " + itemList.size() + " item(s) in the list.");
+        Printer.printLine();
     }
 
     public static void main(String[] args) throws IOException {

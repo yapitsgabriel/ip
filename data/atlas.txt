@@ -1,4 +1,4 @@
 T | 0 | todo 1
-T | 1 | deadline 1 | today or tomorrow
-T | 0 | event 1 | today 9pm | tomorrow 5am
+T | 1 | deadline 1
+T | 0 | event 1
 T | 0 | test
