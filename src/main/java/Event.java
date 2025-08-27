@@ -8,6 +8,17 @@ public class Event extends Item{
         this.to = to;
     }
 
+    public Event(int isDone, String name, String from, String to) {
+        super(isDone, name);
+        this.from = from;
+        this.to = to;
+    }
+
+    @Override
+    public String fileFormat() {
+        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to;
