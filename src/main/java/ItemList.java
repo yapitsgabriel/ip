@@ -13,58 +13,64 @@ public class ItemList {
         this.itemList = itemList;
     }
 
-    public void newTodo(String input) throws EmptyTaskNameException {
-        itemList.add(ItemParser.parseTodo(input));
+    public Item newTodo(String input) throws EmptyTaskNameException {
+        Item newItem = Parser.parseTodo(input);
+        itemList.add(newItem);
+        return newItem;
     }
 
-    public void newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
-        itemList.add(ItemParser.parseDeadline(input));
+    public Item newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
+        Item newItem = Parser.parseDeadline(input);
+        itemList.add(newItem);
+        return newItem;
     }
 
-    public void newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
-        itemList.add(ItemParser.parseEvent(input));
+    public Item newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
+        Item newItem = Parser.parseEvent(input);
+        itemList.add(newItem);
+        return newItem;
     }
 
     public void loadItem(Item item) {
         itemList.add(item);
     }
 
-    public void markitemAsDone(int index) {
+    public void markItemAsDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            ItemPrinter.printLine();
-            ItemPrinter.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Ui.printLine();
+            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
         itemList.get(index).markAsDone();
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Nice! I've marked this item as done:");
-        ItemPrinter.bigSpace(itemList.get(index).toString());
-        ItemPrinter.printLine();
+        Ui.printLine();
+        Ui.smallSpace("Nice! I've marked this item as done:");
+        Ui.bigSpace(itemList.get(index).toString());
+        Ui.printLine();
     }
 
-    public void markitemAsNotDone(int index) {
+    public void markItemAsNotDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            ItemPrinter.printLine();
-            ItemPrinter.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Ui.printLine();
+            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
         itemList.get(index).markAsNotDone();
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Okay, I've marked this item as not done yet:");
-        ItemPrinter.bigSpace( itemList.get(index).toString());
-        ItemPrinter.printLine();
+        Ui.printLine();
+        Ui.smallSpace("Okay, I've marked this item as not done yet:");
+        Ui.bigSpace( itemList.get(index).toString());
+        Ui.printLine();
     }
 
     public void deleteItem(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            ItemPrinter.printLine();
-            ItemPrinter.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
+            Ui.printLine();
+            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
             return;
         }
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Okay, I've deleted this item: ");
-        ItemPrinter.bigSpace(itemList.get(index).toString());
-        ItemPrinter.printLine();
+        Ui.printLine();
+        Ui.smallSpace("Okay, I've deleted this item: ");
+        Ui.bigSpace(itemList.get(index).toString());
+        Ui.printLine();
         itemList.remove(index);
     }
 
@@ -74,31 +80,5 @@ public class ItemList {
 
     public Item getItem(int i) {
         return itemList.get(i);
-    }
-
-    public void printList() {
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Here are the items in your list:");
-        for (int i = 0; i < this.listSize(); i++) {
-            ItemPrinter.bigSpace(Integer.toString(i + 1) + ". " + this.getItem(i).toString());
-        }
-        ItemPrinter.printLine();
-    }
-
-    public void printTodo() {
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Got it! I've added this item:");
-        ItemPrinter.bigSpace(this.getItem(this.listSize() - 1).toString());
-        ItemPrinter.smallSpace("Now you have " + this.listSize() + " item(s) in the list.");
-        ItemPrinter.printLine();
-    }
-
-    public void printToday() {
-        ItemPrinter.printLine();
-        ItemPrinter.smallSpace("Here are your items for today:");
-        for (int i = 0; i < this.listSize(); i++) {
-            ItemPrinter.bigSpace(Integer.toString(i + 1) + ". " + this.getItem(i).toString());
-        }
-        ItemPrinter.printLine();
     }
 }
