@@ -1,4 +1,12 @@
-public class NewTodoCommand implements Command{
+package atlas.commands;
+
+import atlas.exceptions.EmptyTaskNameException;
+import atlas.storage.Storage;
+import atlas.tasks.Item;
+import atlas.tasks.ItemList;
+import atlas.ui.Ui;
+
+public class NewTodoCommand implements Command {
     String input;
 
     public NewTodoCommand(String input) {

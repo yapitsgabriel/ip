@@ -1,3 +1,6 @@
+package atlas.tasks;
+
+import atlas.utilities.Parser;
 import java.time.LocalDateTime;
 
 public class Event extends Item {

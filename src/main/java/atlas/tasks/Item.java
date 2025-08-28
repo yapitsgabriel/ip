@@ -1,3 +1,5 @@
+package atlas.tasks;
+
 public abstract class Item {
     protected String name;
     protected int isDone;

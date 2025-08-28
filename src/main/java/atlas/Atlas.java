@@ -1,14 +1,22 @@
+package atlas;
+
+import atlas.commands.Command;
+import atlas.storage.Storage;
+import atlas.tasks.ItemList;
+import atlas.ui.Ui;
+import atlas.utilities.Parser;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Atlas {
-    private Scanner s;
+    private Scanner scanner;
     private Storage storage;
     private ItemList itemList;
     private Ui ui;
 
-    public Atlas () {
-        this.s = new Scanner(System.in);
+    public Atlas() {
+        this.scanner = new Scanner(System.in);
         this.storage = new Storage();
         this.itemList = new ItemList();
         this.ui = new Ui();
@@ -25,7 +33,7 @@ public class Atlas {
             Ui.printLine();
         }
         while (true) {
-            input = s.nextLine();
+            input = scanner.nextLine();
             Command c = Parser.parseCommand(input);
             c.execute(itemList, ui, storage);
         }

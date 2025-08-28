@@ -1,3 +1,8 @@
+package atlas.ui;
+
+import atlas.tasks.Item;
+import atlas.tasks.ItemList;
+
 public class Ui {
     
     public static void printLine() {
@@ -14,7 +19,7 @@ public class Ui {
 
     public void hello() {
         printLine();
-        smallSpace("Hello, I'm Atlas!");
+        smallSpace("Hello, I'm atlas.Atlas!");
         smallSpace("What do you want to do?");
         printLine();
     }
