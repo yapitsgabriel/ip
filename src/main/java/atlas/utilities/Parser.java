@@ -16,18 +16,27 @@ import atlas.exceptions.InvalidDateRangeException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.InvalidFormatEventException;
 import atlas.exceptions.PastDateException;
-import atlas.tasks.Deadline;
-import atlas.tasks.Event;
-import atlas.tasks.Item;
-import atlas.tasks.Todo;
+import atlas.items.Deadline;
+import atlas.items.Event;
+import atlas.items.Item;
+import atlas.items.Todo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Represents a parser.
+ * Helps with translating user input into commands.
+ */
 public class Parser {
 
+    /**
+     * Turns a command by the user into a Command object.
+     * @param input Given input by the user.
+     * @return A command object.
+     */
     public static Command parseCommand(String input) {
         input = input.trim();
         if (input.equals("bye")) {
@@ -54,6 +63,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a todo command.
+     *
+     * @param input Given input by the user.
+     * @return A new Todo.
+     * @throws EmptyTaskNameException If item name is empty.
+     */
     public static Item parseTodo(String input) throws EmptyTaskNameException {
         if (input.length() < 6) {
             throw new EmptyTaskNameException();
@@ -67,6 +83,16 @@ public class Parser {
         return new Todo(name);
     }
 
+    /**
+     * Parses a deadline command
+     *
+     * @param input Given input by user.
+     * @return A new Deadline.
+     * @throws EmptyTaskNameException If item name is empty.
+     * @throws InvalidFormatDeadlineException If format of item is invalid.
+     * @throws InvalidDateFormatException If format of date is invalid.
+     * @throws PastDateException If date entered is before current date.
+     */
     public static Item parseDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
         if (input.length() < 10) {
             throw new EmptyTaskNameException();
@@ -98,6 +124,17 @@ public class Parser {
         return new Deadline(name, by);
     }
 
+    /**
+     * Parses an event command.
+     *
+     * @param input Given input by user.
+     * @return A new Event.
+     * @throws EmptyTaskNameException If item name is empty.
+     * @throws InvalidFormatEventException If format of item is invalid.
+     * @throws InvalidDateFormatException If format of date is invalid.
+     * @throws PastDateException If date entered is before current date.
+     * @throws InvalidDateRangeException If end date is before start date.
+     */
     public static Item parseEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         if (input.length() < 7) {
             throw new EmptyTaskNameException();
@@ -138,6 +175,13 @@ public class Parser {
         return new Event(name, from, to);
     }
 
+    /**
+     * Parses a date command.
+     * @param input Given input by user.
+     * @return LocalDateTime object.
+     * @throws InvalidDateFormatException If format of date is invalid.
+     * @throws PastDateException If date entered is before current date.
+     */
     public static LocalDateTime parseDate(String input) throws InvalidDateFormatException, PastDateException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         try {
@@ -151,6 +195,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Prints out a date in the relevant format.
+     * @param input LocalDateTime input.
+     * @return Formatted date string.
+     */
     public static String printDate(LocalDateTime input) {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");

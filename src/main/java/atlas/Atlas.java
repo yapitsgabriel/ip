@@ -2,13 +2,16 @@ package atlas;
 
 import atlas.commands.Command;
 import atlas.storage.Storage;
-import atlas.tasks.ItemList;
+import atlas.items.ItemList;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
 
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Represents an Atlas object.
+ */
 public class Atlas {
     private Scanner scanner;
     private Storage storage;
@@ -22,6 +25,9 @@ public class Atlas {
         this.ui = new Ui();
     }
 
+    /**
+     * Runs Atlas.
+     */
     public void run(){
         String input;
         ui.hello();

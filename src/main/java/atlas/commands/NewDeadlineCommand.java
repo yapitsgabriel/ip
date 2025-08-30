@@ -5,16 +5,26 @@ import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.PastDateException;
 import atlas.storage.Storage;
-import atlas.tasks.Item;
-import atlas.tasks.ItemList;
+import atlas.items.Item;
+import atlas.items.ItemList;
 import atlas.ui.Ui;
 
+/**
+ * Represents a command that creates a new deadline
+ */
 public class NewDeadlineCommand implements Command {
     String input;
 
     public NewDeadlineCommand(String input) {
         this.input = input;
     }
+
+    /**
+     * Executes the new deadline command.
+     * @param itemList the list of items to be updated
+     * @param ui the user interface used to display messages
+     * @param storage the storage system used to save data to
+     */
     @Override
     public void execute(ItemList itemList, Ui ui, Storage storage) {
         try {

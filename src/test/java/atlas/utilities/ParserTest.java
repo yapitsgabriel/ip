@@ -10,10 +10,10 @@ import atlas.exceptions.InvalidDateRangeException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.InvalidFormatEventException;
 import atlas.exceptions.PastDateException;
-import atlas.tasks.Deadline;
-import atlas.tasks.Event;
-import atlas.tasks.Item;
-import atlas.tasks.Todo;
+import atlas.items.Deadline;
+import atlas.items.Event;
+import atlas.items.Item;
+import atlas.items.Todo;
 import org.junit.jupiter.api.Test;
 
 public class ParserTest {

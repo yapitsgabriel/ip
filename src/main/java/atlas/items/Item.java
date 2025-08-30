@@ -1,4 +1,4 @@
-package atlas.tasks;
+package atlas.items;
 
 public abstract class Item {
     protected String name;
