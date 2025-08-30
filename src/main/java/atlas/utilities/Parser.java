@@ -74,8 +74,14 @@ public class Parser {
             throw new InvalidFormatDeadlineException();
         }
 
+        // Get full item
+        String item = input.substring(9).trim();
+        if (item.isEmpty()) {
+            throw new EmptyTaskNameException();
+        }
+
         // Get name
-        String[] parts = input.split(Pattern.quote(" /by "));
+        String[] parts = item.split(Pattern.quote(" /by "));
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
         }
@@ -99,8 +105,14 @@ public class Parser {
             throw new InvalidFormatEventException();
         }
 
+        // Get full item
+        String item = input.substring(6).trim();
+        if (item.isEmpty()) {
+            throw new EmptyTaskNameException();
+        }
+
         // Get name
-        String[] parts = input.split(Pattern.quote(" /from "));
+        String[] parts = item.split(Pattern.quote(" /from "));
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
         }

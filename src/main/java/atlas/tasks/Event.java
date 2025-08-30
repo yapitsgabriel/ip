@@ -26,6 +26,6 @@ public class Event extends Item {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + Parser.printDate(from) + " to: " + Parser.printDate(to) + ")";
+        return "[E] " + super.toString() + " (from: " + Parser.printDate(from) + " to: " + Parser.printDate(to) + ")";
     }
 }
