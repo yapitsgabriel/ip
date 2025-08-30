@@ -84,6 +84,21 @@ public class ItemList {
         itemList.remove(index);
     }
 
+    /**
+     * Finds all items matching a given input.
+     * @param input Input given by user.
+     */
+    public void findItem(String input) {
+        ItemList output = new ItemList();
+        for (int i = 0; i < itemList.size(); i++) {
+            Item current = itemList.get(i);
+            if (current.getName().contains(input)) {
+                output.loadItem(current);
+            }
+        }
+        Ui.printMatchingList(output);
+    }
+
     public int listSize() {
         return itemList.size();
     }

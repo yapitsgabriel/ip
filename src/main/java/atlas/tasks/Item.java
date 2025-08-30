@@ -22,6 +22,10 @@ public abstract class Item {
         this.isDone = 0;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int checkDone() {
         return this.isDone;
     }

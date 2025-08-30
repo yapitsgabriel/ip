@@ -22,6 +22,6 @@ public class Deadline extends Item {
 
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " (by: " + Parser.printDate(by) + ")";
+        return "[D] " + super.toString() + " (by: " + Parser.outputDate(by) + ")";
     }
 }

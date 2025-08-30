@@ -51,7 +51,7 @@ public class Ui {
         Ui.printLine();
     }
 
-    public void printList(ItemList itemList) {
+    public static void printList(ItemList itemList) {
         int length = itemList.listSize();
         Ui.printLine();
         if (length == 0) {
@@ -63,6 +63,20 @@ public class Ui {
             }
         }
         Ui.printLine();
+    }
+
+    public static void printMatchingList(ItemList itemList) {
+        int length = itemList.listSize();
+        printLine();
+        if (length == 0) {
+            smallSpace("There are no items matching your search :(");
+        } else {
+            smallSpace("Here are the matching items in your list:");
+            for (int i = 0; i < length; i++) {
+                bigSpace((i + 1) + ". " + itemList.getItem(i).toString());
+            }
+        }
+        printLine();
     }
 
     public void printError(String message) {
