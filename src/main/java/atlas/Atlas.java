@@ -22,9 +22,10 @@ public class Atlas {
         this.ui = new Ui();
     }
 
-    public void run(){
+    public void run() {
         String input;
         ui.hello();
+
         try {
             itemList = storage.load();
         } catch (IOException e) {
@@ -32,14 +33,15 @@ public class Atlas {
             Ui.smallSpace(e.getMessage());
             Ui.printLine();
         }
+
         while (true) {
             input = scanner.nextLine();
-            Command c = Parser.parseCommand(input);
-            c.execute(itemList, ui, storage);
+            Command command = Parser.parseCommand(input);
+            command.execute(itemList, ui, storage);
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Atlas atlas = new Atlas();
         atlas.run();
     }

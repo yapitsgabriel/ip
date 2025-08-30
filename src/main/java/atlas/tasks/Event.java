@@ -4,8 +4,8 @@ import atlas.utilities.Parser;
 import java.time.LocalDateTime;
 
 public class Event extends Item {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
@@ -21,11 +21,11 @@ public class Event extends Item {
 
     @Override
     public String fileFormat() {
-        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to.toString();
+        return "E | " + getIsDone() + " | " + getName() + " | " + from + " | " + to.toString();
     }
 
     @Override
     public String toString() {
-        return "[E] " + super.toString() + " (from: " + Parser.printDate(from) + " to: " + Parser.printDate(to) + ")";
+        return "[E] " + super.toString() + " (from: " + Parser.formatDate(from) + " to: " + Parser.formatDate(to) + ")";
     }
 }

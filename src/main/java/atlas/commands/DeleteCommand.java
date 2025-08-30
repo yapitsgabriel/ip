@@ -5,7 +5,7 @@ import atlas.tasks.ItemList;
 import atlas.ui.Ui;
 
 public class DeleteCommand implements Command {
-    int index;
+    private int index;
 
     public DeleteCommand(int index) {
         this.index = index;

@@ -1,6 +1,6 @@
 package atlas.exceptions;
 
-public class InvalidTaskNumberException extends Exception{
+public class InvalidTaskNumberException extends Exception {
     public InvalidTaskNumberException() {
         super("Please enter a valid task number.");
     }

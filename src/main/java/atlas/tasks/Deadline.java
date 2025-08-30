@@ -4,7 +4,8 @@ import atlas.utilities.Parser;
 import java.time.LocalDateTime;
 
 public class Deadline extends Item {
-    protected LocalDateTime by;
+    private LocalDateTime by;
+
     public Deadline(String name, LocalDateTime by) {
         super(name);
         this.by = by;
@@ -17,11 +18,11 @@ public class Deadline extends Item {
 
     @Override
     public String fileFormat() {
-        return "T | " + this.isDone + " | " + this.name + " | " + this.by.toString();
+        return "D | " + getIsDone() + " | " + getName() + " | " + by.toString();
     }
 
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " (by: " + Parser.printDate(by) + ")";
+        return "[D] " + super.toString() + " (by: " + Parser.formatDate(by) + ")";
     }
 }

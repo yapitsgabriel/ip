@@ -11,7 +11,7 @@ import atlas.tasks.ItemList;
 import atlas.ui.Ui;
 
 public class NewEventCommand implements Command {
-    String input;
+    private String input;
 
     public NewEventCommand(String input) {
         this.input = input;
@@ -21,8 +21,8 @@ public class NewEventCommand implements Command {
         try {
             Item item = itemList.newEvent(input);
             ui.printTodo(item, itemList.listSize());
-        } catch (EmptyTaskNameException | InvalidFormatEventException | InvalidDateFormatException |
-                 PastDateException | InvalidDateRangeException e) {
+        } catch (EmptyTaskNameException | InvalidFormatEventException | InvalidDateFormatException
+                | PastDateException | InvalidDateRangeException e) {
             ui.printError(e.getMessage());
         }
     }

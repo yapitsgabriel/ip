@@ -28,6 +28,19 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
+    private static final int TODO_COMMAND_LENGTH = 5;
+    private static final int DEADLINE_COMMAND_LENGTH = 9;
+    private static final int EVENT_COMMAND_LENGTH = 6;
+    private static final int MARK_COMMAND_LENGTH = 5;
+    private static final int UNMARK_COMMAND_LENGTH = 7;
+    private static final int DELETE_COMMAND_LENGTH = 7;
+
+    private static void trimArrayElements(String[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = array[i].trim();
+        }
+    }
+
     public static Command parseCommand(String input) {
         input = input.trim();
         if (input.equals("bye")) {
@@ -35,13 +48,13 @@ public class Parser {
         } else if (input.equals("list")) {
             return new ListCommand();
         } else if (input.matches("^mark \\d+$")) {
-            int index = Integer.parseInt(input.substring(5)) - 1;
+            int index = Integer.parseInt(input.substring(MARK_COMMAND_LENGTH)) - 1;
             return new MarkCommand(index);
         } else if (input.matches("^unmark \\d+$")) {
-            int index = Integer.parseInt(input.substring(7)) - 1;
+            int index = Integer.parseInt(input.substring(UNMARK_COMMAND_LENGTH)) - 1;
             return new UnmarkCommand(index);
         } else if (input.matches("^delete \\d+$")) {
-            int index = Integer.parseInt(input.substring(7)) - 1;
+            int index = Integer.parseInt(input.substring(DELETE_COMMAND_LENGTH)) - 1;
             return new DeleteCommand(index);
         } else if (input.startsWith("todo")) {
             return new NewTodoCommand(input);
@@ -55,10 +68,10 @@ public class Parser {
     }
 
     public static Item parseTodo(String input) throws EmptyTaskNameException {
-        if (input.length() < 6) {
+        if (input.length() <= TODO_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
         }
-        String name = input.substring(5).trim();
+        String name = input.substring(TODO_COMMAND_LENGTH).trim();
 
         if (name.isEmpty()) {
             throw new EmptyTaskNameException();
@@ -68,23 +81,21 @@ public class Parser {
     }
 
     public static Item parseDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
-        if (input.length() < 10) {
+        if (input.length() <= DEADLINE_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
         } else if (!input.contains(" /by ")) {
             throw new InvalidFormatDeadlineException();
         }
 
         // Get full item
-        String item = input.substring(9).trim();
+        String item = input.substring(DEADLINE_COMMAND_LENGTH).trim();
         if (item.isEmpty()) {
             throw new EmptyTaskNameException();
         }
 
         // Get name
         String[] parts = item.split(Pattern.quote(" /by "));
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
+        trimArrayElements(parts);
 
         String name = parts[0];
         String byText = parts[1];
@@ -99,32 +110,29 @@ public class Parser {
     }
 
     public static Item parseEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
-        if (input.length() < 7) {
+        if (input.length() <= EVENT_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
         } else if (!(input.contains(" /from ") && input.contains(" /to "))) {
             throw new InvalidFormatEventException();
         }
 
         // Get full item
-        String item = input.substring(6).trim();
+        String item = input.substring(EVENT_COMMAND_LENGTH).trim();
         if (item.isEmpty()) {
             throw new EmptyTaskNameException();
         }
 
         // Get name
         String[] parts = item.split(Pattern.quote(" /from "));
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
+        trimArrayElements(parts);
         String name = parts[0];
         String[] parts2 = parts[1].split(Pattern.quote(" /to "));
-        for (int i = 0; i < parts.length; i++) {
-            parts2[i] = parts2[i].trim();
-        }
+        trimArrayElements(parts2);
+
         String fromText = parts2[0];
         String toText = parts2[1];
 
-        if (name.isEmpty() || fromText.isEmpty() | toText.isEmpty()) {
+        if (name.isEmpty() || fromText.isEmpty() || toText.isEmpty()) {
             throw new InvalidFormatEventException();
         }
 
@@ -139,19 +147,19 @@ public class Parser {
     }
 
     public static LocalDateTime parseDate(String input) throws InvalidDateFormatException, PastDateException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         try {
-            LocalDateTime localDateTime = LocalDateTime.parse(input, formatter);
-            if (localDateTime.isBefore(LocalDateTime.now())) {
+            LocalDateTime dateTime = LocalDateTime.parse(input, dateFormatter);
+            if (dateTime.isBefore(LocalDateTime.now())) {
                 throw new PastDateException();
             }
-            return localDateTime;
+            return dateTime;
         } catch (DateTimeParseException e) {
             throw new InvalidDateFormatException();
         }
     }
 
-    public static String printDate(LocalDateTime input) {
+    public static String formatDate(LocalDateTime input) {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String month = input.format(monthFormatter);

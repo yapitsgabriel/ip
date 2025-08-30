@@ -12,7 +12,7 @@ public class ItemListTest {
         String input = "todo Read book";
         itemList.newTodo(input);
         assertEquals(1, itemList.listSize());
-        assertEquals("Read book", itemList.getItem(0).name);
+        assertEquals("Read book", itemList.getItem(0).getName());
     }
 
     @Test
@@ -20,11 +20,11 @@ public class ItemListTest {
         ItemList itemList = new ItemList();
         String input = "todo Read book";
         itemList.newTodo(input);
-        assertEquals(0, itemList.getItem(0).isDone);
+        assertEquals(0, itemList.getItem(0).getIsDone());
         itemList.markItemAsDone(0);
-        assertEquals(1, itemList.getItem(0).isDone);
+        assertEquals(1, itemList.getItem(0).getIsDone());
         itemList.markItemAsNotDone(0);
-        assertEquals(0, itemList.getItem(0).isDone);
+        assertEquals(0, itemList.getItem(0).getIsDone());
     }
 
     public void deleteItem() throws EmptyTaskNameException {

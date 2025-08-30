@@ -12,9 +12,8 @@ public class Todo extends Item {
 
     @Override
     public String fileFormat() {
-        return "T | " + this.isDone + " | " + this.name;
+        return "T | " + getIsDone() + " | " + getName();
     }
-
 
     @Override
     public String toString() {

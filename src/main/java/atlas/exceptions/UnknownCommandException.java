@@ -1,4 +1,4 @@
 package atlas.exceptions;
 
-public class UnknownCommandException extends Exception{
+public class UnknownCommandException extends Exception {
 }

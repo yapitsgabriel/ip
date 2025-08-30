@@ -1,8 +1,8 @@
 package atlas.tasks;
 
 public abstract class Item {
-    protected String name;
-    protected int isDone;
+    private String name;
+    private int isDone;
 
     public Item(String name) {
         this.isDone = 0;
@@ -14,16 +14,20 @@ public abstract class Item {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getIsDone() {
+        return isDone;
+    }
+
     public void markAsDone() {
-            this.isDone = 1;
+            isDone = 1;
     }
 
     public void markAsNotDone() {
-        this.isDone = 0;
-    }
-
-    public int checkDone() {
-        return this.isDone;
+        isDone = 0;
     }
 
     public abstract String fileFormat();

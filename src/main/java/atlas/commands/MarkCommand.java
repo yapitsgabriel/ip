@@ -5,7 +5,7 @@ import atlas.tasks.ItemList;
 import atlas.ui.Ui;
 
 public class MarkCommand implements Command {
-    int index;
+    private int index;
 
     public MarkCommand(int index) {
         this.index = index;
