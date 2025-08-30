@@ -56,7 +56,8 @@ public class ItemList {
      * @throws InvalidDateFormatException If format of date is invalid.
      * @throws PastDateException If date entered is before current date.
      */
-    public Item newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
+    public Item newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException,
+            InvalidDateFormatException, PastDateException {
         Item newItem = Parser.parseDeadline(input);
         itemList.add(newItem);
         return newItem;
@@ -73,7 +74,8 @@ public class ItemList {
      * @throws PastDateException If date entered is before current date.
      * @throws InvalidDateRangeException If end date is before start date.
      */
-    public Item newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
+    public Item newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException,
+            InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         Item newItem = Parser.parseEvent(input);
         itemList.add(newItem);
         return newItem;
@@ -120,7 +122,7 @@ public class ItemList {
         itemList.get(index).markAsNotDone();
         Ui.printLine();
         Ui.smallSpace("Okay, I've marked this item as not done yet:");
-        Ui.bigSpace( itemList.get(index).toString());
+        Ui.bigSpace(itemList.get(index).toString());
         Ui.printLine();
     }
 

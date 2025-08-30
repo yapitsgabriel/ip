@@ -39,12 +39,12 @@ public class Storage {
             Files.createDirectories(p.getParent());
             Files.createFile(p);
         }
-        File f = new File("data/atlas.txt");
 
+        File f = new File("data/atlas.txt");
         Scanner s = new Scanner(f);
 
         while (s.hasNext()) {
-            String nextLine =s.nextLine();
+            String nextLine = s.nextLine();
             loadItem(nextLine);
         }
         return itemList;
@@ -93,7 +93,7 @@ public class Storage {
      * Saves the itemList to the file.
      * @param itemList The itemList to be saved.
      */
-    public void save(ItemList itemList){
+    public void save(ItemList itemList) {
         this.itemList = itemList;
 
         try {

@@ -13,7 +13,7 @@ import atlas.ui.Ui;
  * Represents a command that creates a new deadline
  */
 public class NewDeadlineCommand implements Command {
-    String input;
+    private String input;
 
     public NewDeadlineCommand(String input) {
         this.input = input;
@@ -30,8 +30,8 @@ public class NewDeadlineCommand implements Command {
         try {
             Item item = itemList.newDeadline(input);
             ui.printTodo(item, itemList.listSize());
-        } catch (EmptyTaskNameException | InvalidFormatDeadlineException |
-                 InvalidDateFormatException | PastDateException e) {
+        } catch (EmptyTaskNameException | InvalidFormatDeadlineException | InvalidDateFormatException
+                | PastDateException e) {
             ui.printError(e.getMessage());
         }
     }

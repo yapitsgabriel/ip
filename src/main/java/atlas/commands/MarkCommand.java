@@ -8,7 +8,7 @@ import atlas.ui.Ui;
  * Represents a command that marks a task as done
  */
 public class MarkCommand implements Command {
-    int index;
+    private int index;
 
     public MarkCommand(int index) {
         this.index = index;

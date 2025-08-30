@@ -8,7 +8,7 @@ import atlas.ui.Ui;
  * Represents the command to delete an Item from itemList
  */
 public class DeleteCommand implements Command {
-    int index;
+    private int index;
 
     public DeleteCommand(int index) {
         this.index = index;

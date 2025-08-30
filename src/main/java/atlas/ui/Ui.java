@@ -74,11 +74,11 @@ public class Ui {
      * @param listSize Current size of list.
      */
     public void printTodo(Item item, int listSize) {
-        Ui.printLine();
-        Ui.smallSpace("Got it! I've added this item:");
-        Ui.bigSpace(item.toString());
-        Ui.smallSpace("Now you have " + listSize + " item(s) in the list.");
-        Ui.printLine();
+        printLine();
+        smallSpace("Got it! I've added this item:");
+        bigSpace(item.toString());
+        smallSpace("Now you have " + listSize + " item(s) in the list.");
+        printLine();
     }
 
     /**
@@ -88,16 +88,16 @@ public class Ui {
      */
     public void printList(ItemList itemList) {
         int length = itemList.listSize();
-        Ui.printLine();
+        printLine();
         if (length == 0) {
-            Ui.smallSpace("There are no items in your list. Enjoy your day!");
+            smallSpace("There are no items in your list. Enjoy your day!");
         } else {
-            Ui.smallSpace("Here are the items in your list:");
-            for (int i = 0; i < itemList.listSize(); i++) {
-                Ui.bigSpace(Integer.toString(i + 1) + ". " + itemList.getItem(i).toString());
+            smallSpace("Here are the items in your list:");
+            for (int i = 0; i < length; i++) {
+                bigSpace((i + 1) + ". " + itemList.getItem(i).toString());
             }
         }
-        Ui.printLine();
+        printLine();
     }
 
     /**
@@ -106,8 +106,8 @@ public class Ui {
      * @param message Error message to be printed.
      */
     public void printError(String message) {
-        Ui.printLine();
-        Ui.smallSpace(message);
-        Ui.printLine();
+        printLine();
+        smallSpace(message);
+        printLine();
     }
 }

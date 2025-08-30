@@ -10,7 +10,7 @@ import atlas.ui.Ui;
  * Represents a command that creates a new todo
  */
 public class NewTodoCommand implements Command {
-    String input;
+    private String input;
 
     public NewTodoCommand(String input) {
         this.input = input;

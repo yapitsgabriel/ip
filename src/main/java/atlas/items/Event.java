@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
  * Represents a deadline item.
  */
 public class Event extends Item {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     /**
      * Constructor that only takes in name, from date and to date.
@@ -44,11 +44,11 @@ public class Event extends Item {
      */
     @Override
     public String fileFormat() {
-        return "T | " + this.isDone + " | " + this.name + " | " + this.from + " | " + this.to.toString();
+        return "E | " + getIsDone() + " | " + getName() + " | " + from + " | " + to.toString();
     }
 
     @Override
     public String toString() {
-        return "[E] " + super.toString() + " (from: " + Parser.printDate(from) + " to: " + Parser.printDate(to) + ")";
+        return "[E] " + super.toString() + " (from: " + Parser.formatDate(from) + " to: " + Parser.formatDate(to) + ")";
     }
 }
