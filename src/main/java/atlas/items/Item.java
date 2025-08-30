@@ -23,7 +23,7 @@ public abstract class Item {
     }
 
     public void markAsDone() {
-            isDone = 1;
+        isDone = 1;
     }
 
     public void markAsNotDone() {

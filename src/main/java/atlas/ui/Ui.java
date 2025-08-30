@@ -100,6 +100,20 @@ public class Ui {
         printLine();
     }
 
+    public static void printMatchingList(ItemList itemList) {
+        int length = itemList.listSize();
+        printLine();
+        if (length == 0) {
+            smallSpace("There are no items matching your search :(");
+        } else {
+            smallSpace("Here are the matching items in your list:");
+            for (int i = 0; i < length; i++) {
+                bigSpace((i + 1) + ". " + itemList.getItem(i).toString());
+            }
+        }
+        printLine();
+    }
+
     /**
      * Prints error message with proper formatting.
      *

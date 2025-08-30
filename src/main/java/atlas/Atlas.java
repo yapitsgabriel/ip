@@ -5,7 +5,6 @@ import atlas.storage.Storage;
 import atlas.items.ItemList;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
-
 import java.io.IOException;
 import java.util.Scanner;
 

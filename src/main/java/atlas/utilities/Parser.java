@@ -3,6 +3,7 @@ package atlas.utilities;
 import atlas.commands.ByeCommand;
 import atlas.commands.Command;
 import atlas.commands.DeleteCommand;
+import atlas.commands.FindCommand;
 import atlas.commands.HelpCommand;
 import atlas.commands.ListCommand;
 import atlas.commands.MarkCommand;
@@ -43,6 +44,8 @@ public class Parser {
     private static final int MARK_COMMAND_LENGTH = 5;
     private static final int UNMARK_COMMAND_LENGTH = 7;
     private static final int DELETE_COMMAND_LENGTH = 7;
+    private static final int FIND_COMMAND_LENGTH = 5;
+
 
     private static void trimArrayElements(String[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -71,6 +74,8 @@ public class Parser {
             return new NewDeadlineCommand(input);
         } else if (input.startsWith("event")) {
             return new NewEventCommand(input);
+        } else if (input.startsWith("find")) {
+            return new FindCommand(input.substring(FIND_COMMAND_LENGTH).trim());
         } else {
             return new HelpCommand();
         }
@@ -208,7 +213,7 @@ public class Parser {
      * @param input LocalDateTime input.
      * @return Formatted date string.
      */
-    public static String formatDate(LocalDateTime input) {
+    public static String outputDate(LocalDateTime input) {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String month = input.format(monthFormatter);

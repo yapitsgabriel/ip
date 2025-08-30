@@ -57,7 +57,7 @@ public class ItemList {
      * @throws PastDateException If date entered is before current date.
      */
     public Item newDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException,
-            InvalidDateFormatException, PastDateException {
+        InvalidDateFormatException, PastDateException {
         Item newItem = Parser.parseDeadline(input);
         itemList.add(newItem);
         return newItem;
@@ -75,7 +75,7 @@ public class ItemList {
      * @throws InvalidDateRangeException If end date is before start date.
      */
     public Item newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException,
-            InvalidDateFormatException, PastDateException, InvalidDateRangeException {
+        InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         Item newItem = Parser.parseEvent(input);
         itemList.add(newItem);
         return newItem;
@@ -149,6 +149,21 @@ public class ItemList {
      *
      * @return Size of list.
      */
+    /**
+     * Finds all items matching a given input.
+     * @param input Input given by user.
+     */
+    public void findItem(String input) {
+        ItemList output = new ItemList();
+        for (int i = 0; i < itemList.size(); i++) {
+            Item current = itemList.get(i);
+            if (current.getName().contains(input)) {
+                output.loadItem(current);
+            }
+        }
+        Ui.printMatchingList(output);
+    }
+
     public int listSize() {
         return itemList.size();
     }

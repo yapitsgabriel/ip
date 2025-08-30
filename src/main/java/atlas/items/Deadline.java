@@ -40,11 +40,13 @@ public class Deadline extends Item {
      */
     @Override
     public String fileFormat() {
-        return "D | " + getIsDone() + " | " + getName() + " | " + by.toString();
+        String date = String.format("%02d", by.getDayOfMonth()) + "/" + by.getMonthValue() + "/" + by.getYear() + " "
+            + by.getHour() + ":" + by.getMinute();
+        return "D | " + getIsDone() + " | " + getName() + " | " + date;
     }
 
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " (by: " + Parser.formatDate(by) + ")";
+        return "[D] " + super.toString() + " (by: " + Parser.outputDate(by) + ")";
     }
 }
