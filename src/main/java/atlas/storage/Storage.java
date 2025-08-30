@@ -2,10 +2,10 @@ package atlas.storage;
 
 import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.PastDateException;
-import atlas.tasks.Deadline;
-import atlas.tasks.Event;
-import atlas.tasks.ItemList;
-import atlas.tasks.Todo;
+import atlas.items.Deadline;
+import atlas.items.Event;
+import atlas.items.ItemList;
+import atlas.items.Todo;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
 import java.io.File;
@@ -17,6 +17,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Represents the storage system of Atlas.
+ * It loads tasks upon startup from a file, and saves it to the file upon exiting Atlas.
+ */
 public class Storage {
     private ItemList itemList;
 
@@ -24,6 +28,11 @@ public class Storage {
         this.itemList = new ItemList();
     }
 
+    /**
+     * Loads tasks from file to the local ItemList.
+     * @return An ItemList with all the loaded tasks.
+     * @throws IOException
+     */
     public ItemList load() throws IOException {
         if (!(new File("data/atlas.txt").exists())) {
             Path p = Path.of("data/atlas.txt");
@@ -41,6 +50,10 @@ public class Storage {
         return itemList;
     }
 
+    /**
+     * Loads individual tasks from the file to the local ItemList.
+     * @param nextLine The next line of the input file.
+     */
     public void loadItem(String nextLine) {
         if (nextLine.startsWith("T")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
@@ -76,6 +89,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the itemList to the file.
+     * @param itemList The itemList to be saved.
+     */
     public void save(ItemList itemList){
         this.itemList = itemList;
 

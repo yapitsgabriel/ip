@@ -1,22 +1,40 @@
 package atlas.ui;
 
-import atlas.tasks.Item;
-import atlas.tasks.ItemList;
+import atlas.items.Item;
+import atlas.items.ItemList;
 
+/**
+ * Represents the UI of Atlas.
+ * Helps with string formatting, printing of the help menu, and printing of lists.
+ */
 public class Ui {
-    
+
+    /**
+     * Prints a divider line
+     */
     public static void printLine() {
         System.out.println("    ______________________________________________________________");
     }
 
+    /**
+     * Adds a small space before a given message.
+     * @param message Message to be formatted.
+     */
     public static void smallSpace(String message) {
         System.out.println("     " + message);
     }
 
+    /**
+     * Adds a big space before a given message.
+     * @param message Message to be formatted.
+     */
     public static void bigSpace(String message) {
         System.out.println("        " + message);
     }
 
+    /**
+     * Prints hello message upon start up.
+     */
     public void hello() {
         printLine();
         smallSpace("Hello, I'm atlas.Atlas!");
@@ -24,12 +42,18 @@ public class Ui {
         printLine();
     }
 
+    /**
+     * Prints goodbye message upon exiting.
+     */
     public void bye() {
         printLine();
         smallSpace("Bye! See you next time :)");
         printLine();
     }
 
+    /**
+     * Prints help message.
+     */
     public void printHelpMenu() {
         printLine();
         smallSpace("I don't understand what you mean. You can try these prompts: ");
@@ -43,6 +67,12 @@ public class Ui {
         printLine();
     }
 
+    /**
+     * Prints a given item.
+     *
+     * @param item Item to be printed.
+     * @param listSize Current size of list.
+     */
     public void printTodo(Item item, int listSize) {
         Ui.printLine();
         Ui.smallSpace("Got it! I've added this item:");
@@ -51,6 +81,11 @@ public class Ui {
         Ui.printLine();
     }
 
+    /**
+     * Prints the entire list.
+     *
+     * @param itemList List to be printed.
+     */
     public void printList(ItemList itemList) {
         int length = itemList.listSize();
         Ui.printLine();
@@ -65,6 +100,11 @@ public class Ui {
         Ui.printLine();
     }
 
+    /**
+     * Prints error message with proper formatting.
+     *
+     * @param message Error message to be printed.
+     */
     public void printError(String message) {
         Ui.printLine();
         Ui.smallSpace(message);
