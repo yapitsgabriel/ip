@@ -27,7 +27,7 @@ public class Atlas {
     /**
      * Runs Atlas.
      */
-    public void run(){
+    public void run() {
         String input;
         ui.hello();
         try {
@@ -42,6 +42,10 @@ public class Atlas {
             Command c = Parser.parseCommand(input);
             c.execute(itemList, ui, storage);
         }
+    }
+
+    public String getResponse(String input) {
+        return "Atlas heard: " + input;
     }
 
     public static void main(String[] args){
