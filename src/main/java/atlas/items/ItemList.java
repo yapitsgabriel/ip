@@ -17,6 +17,7 @@ import java.util.List;
 public class ItemList {
 
     private List<Item> itemList;
+    private Ui ui;
 
     /**
      * Initialise an empty list.
@@ -131,16 +132,9 @@ public class ItemList {
      *
      * @param index Index of item to be deleted.
      */
-    public void deleteItem(int index) {
+    public String deleteItem(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            Ui.printLine();
-            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
-            return;
-        }
-        Ui.printLine();
-        Ui.smallSpace("Okay, I've deleted this item: ");
-        Ui.bigSpace(itemList.get(index).toString());
-        Ui.printLine();
+        ui.printDeleteItem(itemList.get(index));
         itemList.remove(index);
     }
 
@@ -153,7 +147,7 @@ public class ItemList {
      * Finds all items matching a given input.
      * @param input Input given by user.
      */
-    public void findItem(String input) {
+    public String findItem(String input) {
         ItemList output = new ItemList();
         for (int i = 0; i < itemList.size(); i++) {
             Item current = itemList.get(i);
@@ -161,7 +155,7 @@ public class ItemList {
                 output.loadItem(current);
             }
         }
-        Ui.printMatchingList(output);
+        ui.printMatchingList(output);
     }
 
     public int listSize() {

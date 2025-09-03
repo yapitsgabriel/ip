@@ -8,120 +8,93 @@ import atlas.items.ItemList;
  * Helps with string formatting, printing of the help menu, and printing of lists.
  */
 public class Ui {
-
     /**
-     * Prints a divider line
+     * Returns hello message upon start up.
      */
-    public static void printLine() {
-        System.out.println("    ______________________________________________________________");
+    public String hello() {
+        return "Hello, I'm Atlas. What do you want to do?";
     }
 
     /**
-     * Adds a small space before a given message.
-     * @param message Message to be formatted.
+     * Returns goodbye message upon exiting.
      */
-    public static void smallSpace(String message) {
-        System.out.println("     " + message);
+    public String bye() {
+        return "Bye! See you next time :)";
     }
 
     /**
-     * Adds a big space before a given message.
-     * @param message Message to be formatted.
+     * Returns help message.
      */
-    public static void bigSpace(String message) {
-        System.out.println("        " + message);
+    public String printHelpMenu() {
+        return "I don't understand what you mean. You can try these prompts: \n"
+                + "• list\n"
+                + "• todo <task name>\n"
+                + "• deadline <task name> /by <deadline>\n"
+                + "• event <task name> /from <start date> /to <end date>\n"
+                + "• mark <task number>\n"
+                + "• unmark <task number>\n"
+                + "• delete <task number>";
     }
 
     /**
-     * Prints hello message upon start up.
-     */
-    public void hello() {
-        printLine();
-        smallSpace("Hello, I'm atlas.Atlas!");
-        smallSpace("What do you want to do?");
-        printLine();
-    }
-
-    /**
-     * Prints goodbye message upon exiting.
-     */
-    public void bye() {
-        printLine();
-        smallSpace("Bye! See you next time :)");
-        printLine();
-    }
-
-    /**
-     * Prints help message.
-     */
-    public void printHelpMenu() {
-        printLine();
-        smallSpace("I don't understand what you mean. You can try these prompts: ");
-        smallSpace("• list");
-        smallSpace("• todo <task name>");
-        smallSpace("• deadline <task name> /by <deadline>");
-        smallSpace("• event <task name> /from <start date> /to <end date>");
-        smallSpace("• mark <task number>");
-        smallSpace("• unmark <task number>");
-        smallSpace("• delete <task number>");
-        printLine();
-    }
-
-    /**
-     * Prints a given item.
+     * Returns a given item.
      *
      * @param item Item to be printed.
      * @param listSize Current size of list.
      */
-    public void printTodo(Item item, int listSize) {
-        printLine();
-        smallSpace("Got it! I've added this item:");
-        bigSpace(item.toString());
-        smallSpace("Now you have " + listSize + " item(s) in the list.");
-        printLine();
+    public String printTodo(Item item, int listSize) {
+        return "Got it! I've added this item:\n" + item.toString() + "\n"
+                + "Now you have " + listSize + " item(s) in the list.";
     }
 
     /**
-     * Prints the entire list.
+     * Returns the entire list.
      *
      * @param itemList List to be printed.
      */
-    public void printList(ItemList itemList) {
+    public String printList(ItemList itemList) {
         int length = itemList.listSize();
-        printLine();
         if (length == 0) {
-            smallSpace("There are no items in your list. Enjoy your day!");
+            return "There are no items in your list. Enjoy your day!";
         } else {
-            smallSpace("Here are the items in your list:");
+            StringBuilder items = new StringBuilder();
             for (int i = 0; i < length; i++) {
-                bigSpace((i + 1) + ". " + itemList.getItem(i).toString());
+                items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
             }
+            return "Here are the items in your list\n" + items;
+
         }
-        printLine();
     }
 
-    public static void printMatchingList(ItemList itemList) {
+    public String printMatchingList(ItemList itemList) {
         int length = itemList.listSize();
-        printLine();
         if (length == 0) {
-            smallSpace("There are no items matching your search :(");
+            return "There are no items matching your search :(";
         } else {
-            smallSpace("Here are the matching items in your list:");
+            StringBuilder items = new StringBuilder();
             for (int i = 0; i < length; i++) {
-                bigSpace((i + 1) + ". " + itemList.getItem(i).toString());
+                items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
             }
+            return "Here are the matching items in your list:" + items;
         }
-        printLine();
+    }
+
+    public String printDeleteItem(Item item) {
+        if (index < 0 || index > itemList.size() - 1) {
+            return "Invalid number! Please choose a number between 1 and " + itemList.size();
+        }
+        else {
+
+            return "Okay, I've deleted this item:\n" + itemList.get(index).toString();
+        }
     }
 
     /**
-     * Prints error message with proper formatting.
+     * Returns error message with proper formatting.
      *
      * @param message Error message to be printed.
      */
-    public void printError(String message) {
-        printLine();
-        smallSpace(message);
-        printLine();
+    public String printError(String message) {
+        return message;
     }
 }
