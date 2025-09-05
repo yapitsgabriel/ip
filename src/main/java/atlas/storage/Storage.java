@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
  */
 public class Storage {
     private ItemList itemList;
+    private Ui ui = new Ui();
 
     public Storage() {
         this.itemList = new ItemList();
@@ -69,9 +70,7 @@ public class Storage {
             try {
                 itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                Ui.printLine();
-                Ui.smallSpace(e.getMessage());
-                Ui.printLine();
+                ui.printError(e.getMessage());
             }
 
         } else if (nextLine.startsWith("E")) {
@@ -82,9 +81,7 @@ public class Storage {
             try {
                 itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                Ui.printLine();
-                Ui.smallSpace(e.getMessage());
-                Ui.printLine();
+                ui.printError(e.getMessage());
             }
         }
     }
@@ -104,9 +101,7 @@ public class Storage {
             f.close();
             Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            Ui.printLine();
-            Ui.smallSpace("There was an error saving the file.");
-            Ui.printLine();
+            ui.printError(e.getMessage());
         }
 
 

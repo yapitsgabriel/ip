@@ -26,13 +26,13 @@ public class NewDeadlineCommand implements Command {
      * @param storage the storage system used to save data to
      */
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {
             Item item = itemList.newDeadline(input);
-            ui.printTodo(item, itemList.listSize());
+            return ui.printTodo(item, itemList.listSize());
         } catch (EmptyTaskNameException | InvalidFormatDeadlineException | InvalidDateFormatException
                 | PastDateException e) {
-            ui.printError(e.getMessage());
+            return ui.printError(e.getMessage());
         }
     }
 }

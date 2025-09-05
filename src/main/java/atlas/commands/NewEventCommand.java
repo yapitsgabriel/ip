@@ -27,13 +27,13 @@ public class NewEventCommand implements Command {
      * @param storage the storage system used to save data to
      */
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {
             Item item = itemList.newEvent(input);
-            ui.printTodo(item, itemList.listSize());
+            return ui.printTodo(item, itemList.listSize());
         } catch (EmptyTaskNameException | InvalidFormatEventException | InvalidDateFormatException
                 | PastDateException | InvalidDateRangeException e) {
-            ui.printError(e.getMessage());
+            return ui.printError(e.getMessage());
         }
     }
 }

@@ -33,9 +33,7 @@ public class Atlas {
         try {
             itemList = storage.load();
         } catch (IOException e) {
-            Ui.printLine();
-            Ui.smallSpace(e.getMessage());
-            Ui.printLine();
+            ui.printError(e.getMessage());
         }
         while (true) {
             input = scanner.nextLine();
@@ -45,7 +43,8 @@ public class Atlas {
     }
 
     public String getResponse(String input) {
-        return "Atlas heard: " + input;
+        Command command = Parser.parseCommand(input);
+        return command.execute(itemList, ui, storage);
     }
 
     public static void main(String[] args){

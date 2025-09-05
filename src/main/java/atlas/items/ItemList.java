@@ -96,17 +96,13 @@ public class ItemList {
      *
      * @param index Index of item to be marked.
      */
-    public void markItemAsDone(int index) {
+    public String markItemAsDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            Ui.printLine();
-            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
-            return;
+            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
+        } else {
+            itemList.get(index).markAsDone();
+            return ui.printMarkItemAsDone(itemList.get(index));
         }
-        itemList.get(index).markAsDone();
-        Ui.printLine();
-        Ui.smallSpace("Nice! I've marked this item as done:");
-        Ui.bigSpace(itemList.get(index).toString());
-        Ui.printLine();
     }
 
     /**
@@ -114,17 +110,13 @@ public class ItemList {
      *
      * @param index Index of item to be marked.
      */
-    public void markItemAsNotDone(int index) {
+    public String markItemAsNotDone(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-            Ui.printLine();
-            Ui.smallSpace("Invalid number! Please choose a number between 1 and " + itemList.size());
-            return;
+            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
+        } else {
+            itemList.get(index).markAsNotDone();
+            return ui.printMarkItemAsNotDone(itemList.get(index));
         }
-        itemList.get(index).markAsNotDone();
-        Ui.printLine();
-        Ui.smallSpace("Okay, I've marked this item as not done yet:");
-        Ui.bigSpace(itemList.get(index).toString());
-        Ui.printLine();
     }
 
     /**
@@ -134,8 +126,12 @@ public class ItemList {
      */
     public String deleteItem(int index) {
         if (index < 0 || index > itemList.size() - 1) {
-        ui.printDeleteItem(itemList.get(index));
-        itemList.remove(index);
+            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
+        } else {
+            String deleteMessage = ui.printDeleteItem(itemList.get(index));
+            itemList.remove(index);
+            return deleteMessage;
+        }
     }
 
     /**
@@ -155,7 +151,11 @@ public class ItemList {
                 output.loadItem(current);
             }
         }
-        ui.printMatchingList(output);
+        if (output.listSize() == 0) {
+            return ui.printError("No matching item found!");
+        } else {
+            return ui.printMatchingList(output);
+        }
     }
 
     public int listSize() {

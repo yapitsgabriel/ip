@@ -80,13 +80,15 @@ public class Ui {
     }
 
     public String printDeleteItem(Item item) {
-        if (index < 0 || index > itemList.size() - 1) {
-            return "Invalid number! Please choose a number between 1 and " + itemList.size();
+            return "Okay, I've deleted this item:\n" + item.toString();
         }
-        else {
 
-            return "Okay, I've deleted this item:\n" + itemList.get(index).toString();
-        }
+    public String printMarkItemAsDone(Item item) {
+        return "Okay, I've marked this item as done: \n" + item.toString();
+    }
+
+    public String printMarkItemAsNotDone(Item item) {
+        return "Okay, I've marked this item as not done yet: \n" + item.toString();
     }
 
     /**
