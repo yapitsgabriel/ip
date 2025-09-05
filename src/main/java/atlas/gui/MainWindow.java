@@ -34,6 +34,7 @@ public class MainWindow extends AnchorPane {
     /** Injects the Atlas instance */
     public void setAtlas(Atlas a) {
         atlas = a;
+        atlas.loadData();
     }
 
     /**

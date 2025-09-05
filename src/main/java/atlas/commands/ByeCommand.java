@@ -21,7 +21,7 @@ public class ByeCommand implements Command {
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        storage.save(itemList);
+        storage.save(itemList, ui);
         return ui.bye();
     }
 }

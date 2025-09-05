@@ -27,18 +27,11 @@ public class Atlas {
     /**
      * Runs Atlas.
      */
-    public void run() {
-        String input;
-        ui.hello();
+    public void loadData() {
         try {
-            itemList = storage.load();
+            itemList = storage.load(itemList, ui);
         } catch (IOException e) {
-            ui.printError(e.getMessage());
-        }
-        while (true) {
-            input = scanner.nextLine();
-            Command c = Parser.parseCommand(input);
-            c.execute(itemList, ui, storage);
+            System.out.println(ui.printError(e.getMessage()));
         }
     }
 
@@ -47,8 +40,4 @@ public class Atlas {
         return command.execute(itemList, ui, storage);
     }
 
-    public static void main(String[] args){
-        Atlas atlas = new Atlas();
-        atlas.run();
-    }
 }
