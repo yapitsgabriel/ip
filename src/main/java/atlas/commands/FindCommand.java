@@ -20,7 +20,7 @@ public class FindCommand implements Command {
      * @param ui
      * @param storage
      */
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
-        itemList.findItem(input);
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
+        return itemList.findItem(ui, input);
     }
 }

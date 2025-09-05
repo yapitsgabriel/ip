@@ -21,7 +21,7 @@ public class DeleteCommand implements Command {
      * @param storage the storage system used to save data to
      */
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
-        itemList.deleteItem(index);
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
+        return itemList.deleteItem(ui, index);
     }
 }

@@ -17,8 +17,10 @@ import atlas.items.Todo;
 import org.junit.jupiter.api.Test;
 
 public class ParserTest {
+
     @Test
     public void testParseTodo_validInput() throws EmptyTaskNameException {
+
         String input = "todo Read book";
         Item item = Parser.parseTodo(input);
         assertInstanceOf(Todo.class, item);

@@ -22,7 +22,7 @@ public class UnmarkCommand implements Command {
      */
 
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
-        itemList.markItemAsNotDone(index);
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
+        return itemList.markItemAsNotDone(ui, index);
     }
 }

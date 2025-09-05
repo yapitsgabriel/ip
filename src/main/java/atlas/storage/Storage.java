@@ -22,18 +22,12 @@ import java.util.regex.Pattern;
  * It loads tasks upon startup from a file, and saves it to the file upon exiting Atlas.
  */
 public class Storage {
-    private ItemList itemList;
-
-    public Storage() {
-        this.itemList = new ItemList();
-    }
-
     /**
      * Loads tasks from file to the local ItemList.
      * @return An ItemList with all the loaded tasks.
      * @throws IOException
      */
-    public ItemList load() throws IOException {
+    public ItemList load(ItemList itemList, Ui ui) throws IOException {
         if (!(new File("data/atlas.txt").exists())) {
             Path p = Path.of("data/atlas.txt");
             Files.createDirectories(p.getParent());
@@ -45,7 +39,7 @@ public class Storage {
 
         while (s.hasNext()) {
             String nextLine = s.nextLine();
-            loadItem(nextLine);
+            loadItem(nextLine, itemList, ui);
         }
         return itemList;
     }
@@ -54,7 +48,7 @@ public class Storage {
      * Loads individual tasks from the file to the local ItemList.
      * @param nextLine The next line of the input file.
      */
-    public void loadItem(String nextLine) {
+    public void loadItem(String nextLine, ItemList itemList, Ui ui) {
         if (nextLine.startsWith("T")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
             for (int i = 0; i < parts.length; i++) {
@@ -69,9 +63,7 @@ public class Storage {
             try {
                 itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                Ui.printLine();
-                Ui.smallSpace(e.getMessage());
-                Ui.printLine();
+                ui.printError(e.getMessage());
             }
 
         } else if (nextLine.startsWith("E")) {
@@ -82,9 +74,7 @@ public class Storage {
             try {
                 itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
             } catch (InvalidDateFormatException | PastDateException e) {
-                Ui.printLine();
-                Ui.smallSpace(e.getMessage());
-                Ui.printLine();
+                ui.printError(e.getMessage());
             }
         }
     }
@@ -93,9 +83,7 @@ public class Storage {
      * Saves the itemList to the file.
      * @param itemList The itemList to be saved.
      */
-    public void save(ItemList itemList) {
-        this.itemList = itemList;
-
+    public void save(ItemList itemList, Ui ui) {
         try {
             FileWriter f = new FileWriter("data/atlas_temp.txt", false);
             for (int i = 0; i < itemList.listSize(); i++) {
@@ -104,9 +92,7 @@ public class Storage {
             f.close();
             Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            Ui.printLine();
-            Ui.smallSpace("There was an error saving the file.");
-            Ui.printLine();
+            ui.printError(e.getMessage());
         }
 
 

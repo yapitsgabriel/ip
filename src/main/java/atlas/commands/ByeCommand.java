@@ -20,8 +20,8 @@ public class ByeCommand implements Command {
      * @param storage the storage system used to save data to
      */
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
-        ui.bye();
-        storage.save(itemList);
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
+        storage.save(itemList, ui);
+        return ui.bye();
     }
 }

@@ -16,7 +16,7 @@ public class HelpCommand implements Command {
      * @param storage the storage system used to save data to
      */
     @Override
-    public void execute(ItemList itemList, Ui ui, Storage storage) {
-        ui.printHelpMenu();
+    public String execute(ItemList itemList, Ui ui, Storage storage) {
+        return ui.printHelpMenu();
     }
 }
