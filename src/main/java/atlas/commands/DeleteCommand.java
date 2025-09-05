@@ -22,6 +22,6 @@ public class DeleteCommand implements Command {
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.deleteItem(index);
+        return itemList.deleteItem(ui, index);
     }
 }

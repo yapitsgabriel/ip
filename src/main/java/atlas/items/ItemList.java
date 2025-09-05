@@ -17,7 +17,6 @@ import java.util.List;
 public class ItemList {
 
     private List<Item> itemList;
-    private Ui ui;
 
     /**
      * Initialise an empty list.
@@ -96,7 +95,7 @@ public class ItemList {
      *
      * @param index Index of item to be marked.
      */
-    public String markItemAsDone(int index) {
+    public String markItemAsDone(Ui ui, int index) {
         if (index < 0 || index > itemList.size() - 1) {
             return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
         } else {
@@ -110,7 +109,7 @@ public class ItemList {
      *
      * @param index Index of item to be marked.
      */
-    public String markItemAsNotDone(int index) {
+    public String markItemAsNotDone(Ui ui, int index) {
         if (index < 0 || index > itemList.size() - 1) {
             return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
         } else {
@@ -124,7 +123,7 @@ public class ItemList {
      *
      * @param index Index of item to be deleted.
      */
-    public String deleteItem(int index) {
+    public String deleteItem(Ui ui, int index) {
         if (index < 0 || index > itemList.size() - 1) {
             return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
         } else {
@@ -143,7 +142,7 @@ public class ItemList {
      * Finds all items matching a given input.
      * @param input Input given by user.
      */
-    public String findItem(String input) {
+    public String findItem(Ui ui, String input) {
         ItemList output = new ItemList();
         for (int i = 0; i < itemList.size(); i++) {
             Item current = itemList.get(i);

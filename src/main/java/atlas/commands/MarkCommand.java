@@ -22,6 +22,6 @@ public class MarkCommand implements Command {
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.markItemAsDone(index);
+        return itemList.markItemAsDone(ui, index);
     }
 }

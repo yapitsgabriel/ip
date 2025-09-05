@@ -35,6 +35,10 @@ public class Atlas {
         }
     }
 
+    public String hello() {
+        return ui.hello();
+    }
+
     public String getResponse(String input) {
         Command command = Parser.parseCommand(input);
         return command.execute(itemList, ui, storage);

@@ -21,6 +21,6 @@ public class FindCommand implements Command {
      * @param storage
      */
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.findItem(input);
+        return itemList.findItem(ui, input);
     }
 }

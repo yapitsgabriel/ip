@@ -23,6 +23,6 @@ public class UnmarkCommand implements Command {
 
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.markItemAsNotDone(index);
+        return itemList.markItemAsNotDone(ui, index);
     }
 }

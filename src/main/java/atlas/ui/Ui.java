@@ -75,7 +75,7 @@ public class Ui {
             for (int i = 0; i < length; i++) {
                 items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
             }
-            return "Here are the matching items in your list:" + items;
+            return "Here are the matching items in your list:\n" + items;
         }
     }
 

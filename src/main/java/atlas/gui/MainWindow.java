@@ -35,6 +35,7 @@ public class MainWindow extends AnchorPane {
     public void setAtlas(Atlas a) {
         atlas = a;
         atlas.loadData();
+        dialogContainer.getChildren().addAll(DialogBox.getAtlasDialog(atlas.hello(), atlasImage));
     }
 
     /**
