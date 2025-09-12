@@ -1,12 +1,13 @@
 package atlas;
 
-import atlas.commands.Command;
-import atlas.storage.Storage;
-import atlas.items.ItemList;
-import atlas.ui.Ui;
-import atlas.utilities.Parser;
 import java.io.IOException;
 import java.util.Scanner;
+
+import atlas.commands.Command;
+import atlas.items.ItemList;
+import atlas.storage.Storage;
+import atlas.ui.Ui;
+import atlas.utilities.Parser;
 
 /**
  * Represents an Atlas object.
