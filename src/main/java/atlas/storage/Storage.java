@@ -51,12 +51,14 @@ public class Storage {
     public void loadItem(String nextLine, ItemList itemList, Ui ui) {
         if (nextLine.startsWith("T")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
+            assert parts.length == 3;
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
             itemList.loadItem(new Todo(Integer.parseInt(parts[1]), parts[2]));
         } else if (nextLine.startsWith("D")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
+            assert parts.length == 4;
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
@@ -68,6 +70,7 @@ public class Storage {
 
         } else if (nextLine.startsWith("E")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
+            assert parts.length == 5;
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
