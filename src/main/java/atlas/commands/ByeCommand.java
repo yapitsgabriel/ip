@@ -1,7 +1,7 @@
 package atlas.commands;
 
-import atlas.storage.Storage;
 import atlas.items.ItemList;
+import atlas.storage.Storage;
 import atlas.ui.Ui;
 
 /**
