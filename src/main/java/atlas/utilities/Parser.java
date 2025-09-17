@@ -224,12 +224,8 @@ public class Parser {
         if (name.isEmpty() || durationText.isEmpty()) {
             throw new InvalidFormatFixedDurationException();
         }
-        try {
-            int duration = Integer.parseInt(durationText);
-            return new FixedDuration(name, duration);
-        } catch (NumberFormatException e) {
-            throw new InvalidDurationException();
-        }
+        int duration = parseDuration(durationText);
+        return new FixedDuration(name, duration);
     }
 
     /**
@@ -351,5 +347,18 @@ public class Parser {
         }
 
         return name;
+    }
+
+    public static int parseDuration(String input) throws InvalidDurationException {
+        int number;
+        try {
+            number = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidDurationException();
+        }
+        if (number <= 0) {
+            throw new InvalidDurationException();
+        }
+        return number;
     }
 }
