@@ -51,44 +51,59 @@ public class Storage {
      */
     public void loadItem(String nextLine, ItemList itemList, Ui ui) {
         if (nextLine.startsWith("T")) {
-            String[] parts = nextLine.split(Pattern.quote("|"));
-            assert parts.length == 3;
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].trim();
-            }
-            itemList.loadItem(new Todo(Parser.parseIsDone(parts[1]), parts[2]));
+            loadTodo(nextLine, itemList, ui);
         } else if (nextLine.startsWith("D")) {
-            String[] parts = nextLine.split(Pattern.quote("|"));
-            assert parts.length == 4;
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].trim();
-            }
-            try {
-                itemList.loadItem(new Deadline(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3])));
-            } catch (InvalidDateFormatException | PastDateException e) {
-                ui.printError(e.getMessage());
-            }
-
+            loadDeadline(nextLine, itemList, ui);
         } else if (nextLine.startsWith("E")) {
-            String[] parts = nextLine.split(Pattern.quote("|"));
-            assert parts.length == 5;
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].trim();
-            }
-            try {
-                itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]),
-                        Parser.parseDate(parts[4])));
-            } catch (InvalidDateFormatException | PastDateException e) {
-                ui.printError(e.getMessage());
-            }
+            loadEvent(nextLine, itemList, ui);
         } else if (nextLine.startsWith("F")) {
-            String[] parts = nextLine.split(Pattern.quote("|"));
-            assert parts.length == 4;
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].trim();
-            }
-            itemList.loadItem(new FixedDuration(Parser.parseIsDone(parts[1]), parts[2], Integer.parseInt(parts[3])));
+            loadFixedDuration(nextLine, itemList, ui);
         }
+    }
+
+    public void loadTodo(String nextLine, ItemList itemList, Ui ui) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        assert parts.length == 3;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        itemList.loadItem(new Todo(Parser.parseIsDone(parts[1]), parts[2]));
+    }
+
+    public void loadDeadline(String nextLine, ItemList itemList, Ui ui) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        assert parts.length == 4;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        try {
+            itemList.loadItem(new Deadline(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3])));
+        } catch (InvalidDateFormatException | PastDateException e) {
+            ui.printError(e.getMessage());
+        }
+    }
+
+    public void loadEvent(String nextLine, ItemList itemList, Ui ui) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        assert parts.length == 5;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        try {
+            itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]),
+                Parser.parseDate(parts[4])));
+        } catch (InvalidDateFormatException | PastDateException e) {
+            ui.printError(e.getMessage());
+        }
+    }
+
+    public void loadFixedDuration(String nextLine, ItemList itemList, Ui ui) {
+        String[] parts = nextLine.split(Pattern.quote("|"));
+        assert parts.length == 4;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        itemList.loadItem(new FixedDuration(Parser.parseIsDone(parts[1]), parts[2], Integer.parseInt(parts[3])));
     }
 
     /**
