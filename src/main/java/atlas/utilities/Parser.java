@@ -4,12 +4,12 @@ import atlas.commands.ByeCommand;
 import atlas.commands.Command;
 import atlas.commands.DeleteCommand;
 import atlas.commands.FindCommand;
-import atlas.commands.HelpCommand;
 import atlas.commands.ListCommand;
 import atlas.commands.MarkCommand;
 import atlas.commands.NewDeadlineCommand;
 import atlas.commands.NewEventCommand;
 import atlas.commands.NewTodoCommand;
+import atlas.commands.UnknownCommand;
 import atlas.commands.UnmarkCommand;
 import atlas.exceptions.EmptyTaskNameException;
 import atlas.exceptions.InvalidDateFormatException;
@@ -77,7 +77,7 @@ public class Parser {
         } else if (input.startsWith("find")) {
             return new FindCommand(input.substring(FIND_COMMAND_LENGTH).trim());
         } else {
-            return new HelpCommand();
+            return new UnknownCommand();
         }
     }
 
