@@ -2,14 +2,14 @@ package atlas.items;
 
 public abstract class Item {
     private String name;
-    private int isDone;
+    private boolean isDone;
 
     public Item(String name) {
-        this.isDone = 0;
+        this.isDone = false;
         this.name = name;
     }
 
-    public Item(int isDone, String name) {
+    public Item(boolean isDone, String name) {
         this.isDone = isDone;
         this.name = name;
     }
@@ -18,23 +18,23 @@ public abstract class Item {
         return name;
     }
 
-    public int getIsDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
     public void markAsDone() {
-        isDone = 1;
+        isDone = true;
     }
 
     public void markAsNotDone() {
-        isDone = 0;
+        isDone = false;
     }
 
     public abstract String fileFormat();
 
     @Override
     public String toString() {
-        if (isDone == 1) {
+        if (isDone) {
             return "[X] " + name;
         } else {
             return "[ ] " + name;

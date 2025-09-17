@@ -28,7 +28,7 @@ public class Deadline extends Item {
      * @param name Name of item.
      * @param by Deadline of item.
      */
-    public Deadline(int isDone, String name, LocalDateTime by) {
+    public Deadline(boolean isDone, String name, LocalDateTime by) {
         super(isDone, name);
         this.by = by;
     }
