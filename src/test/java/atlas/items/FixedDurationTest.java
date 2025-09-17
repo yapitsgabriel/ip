@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class FixedDurationTest {
+    // Code generated from Claude on 17/09/2025
+    // Prompt: Can you help me make comprehensive test cases for all the features of the app. Make sure you
+    // use the exact same format as the test files that I already have.
+    // Reviewed and tested by author.
 
     @Test
     public void testFixedDurationConstructor_withNameAndDuration() {

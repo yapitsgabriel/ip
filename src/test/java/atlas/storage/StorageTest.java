@@ -10,7 +10,6 @@ import atlas.items.FixedDuration;
 import atlas.items.ItemList;
 import atlas.items.Todo;
 import atlas.ui.Ui;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,6 +20,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class StorageTest {
+    // Code generated from Claude on 17/09/2025
+    // Prompt: Can you help me make comprehensive test cases for all the features of the app. Make sure you
+    // use the exact same format as the test files that I already have.
+    // Reviewed and tested by author.
 
     private Storage storage;
     private ItemList itemList;

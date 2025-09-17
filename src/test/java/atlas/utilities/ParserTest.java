@@ -24,6 +24,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 public class ParserTest {
+    // Code generated from Claude on 17/09/2025
+    // Prompt: Can you help me make comprehensive test cases for all the features of the app. Make sure you
+    // use the exact same format as the test files that I already have.
+    // Reviewed and tested by author.
 
     @Test
     public void testParseTodo_validInput() throws EmptyTaskNameException {
