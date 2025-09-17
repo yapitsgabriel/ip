@@ -1,5 +1,15 @@
 package atlas.storage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import atlas.exceptions.CorruptedFileException;
 import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.InvalidDurationException;
@@ -11,15 +21,6 @@ import atlas.items.ItemList;
 import atlas.items.Todo;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 /**
  * Represents the storage system of Atlas.
@@ -32,7 +33,7 @@ public class Storage {
      * @param itemList The ItemList in which to load the items to.
      * @param ui The Ui to display messages to.
      * @return An ItemList with all the loaded tasks.
-     * @throws IOException
+     * @throws IOException If an I/O error occurs when reading from the file.
      */
     public ItemList load(ItemList itemList, Ui ui) throws IOException {
         if (!(new File("data/atlas.txt").exists())) {
@@ -67,6 +68,8 @@ public class Storage {
             loadEvent(nextLine, itemList, ui);
         } else if (nextLine.startsWith("F")) {
             loadFixedDuration(nextLine, itemList, ui);
+        } else {
+            ui.printError("Unknown item format: " + nextLine);
         }
     }
 

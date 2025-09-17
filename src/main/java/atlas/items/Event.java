@@ -1,7 +1,8 @@
 package atlas.items;
 
-import atlas.utilities.Parser;
 import java.time.LocalDateTime;
+
+import atlas.utilities.Parser;
 
 /**
  * Represents a deadline item.
@@ -44,18 +45,8 @@ public class Event extends Item {
      */
     @Override
     public String fileFormat() {
-        String fromDate = String.format("%02d/%02d/%d %02d:%02d",
-            from.getDayOfMonth(),
-            from.getMonthValue(),
-            from.getYear(),
-            from.getHour(),
-            from.getMinute());
-        String toDate = String.format("%02d/%02d/%d %02d:%02d",
-            to.getDayOfMonth(),
-            to.getMonthValue(),
-            to.getYear(),
-            to.getHour(),
-            to.getMinute());
+        String fromDate = Parser.formatDateForFile(from);
+        String toDate = Parser.formatDateForFile(to);
         return "E | " + getIsDone() + " | " + getName() + " | " + fromDate + " | " + toDate;
     }
 

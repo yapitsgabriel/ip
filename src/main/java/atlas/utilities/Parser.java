@@ -1,5 +1,11 @@
 package atlas.utilities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
 import atlas.commands.ByeCommand;
 import atlas.commands.Command;
 import atlas.commands.DeleteCommand;
@@ -28,11 +34,6 @@ import atlas.items.Event;
 import atlas.items.FixedDuration;
 import atlas.items.Item;
 import atlas.items.Todo;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Locale;
-import java.util.regex.Pattern;
 
 /**
  * Represents a parser.
@@ -52,6 +53,9 @@ public class Parser {
     private static final String FROM_TAG = " /from ";
     private static final String TO_TAG = " /to ";
     private static final String DURATION_TAG = " /duration ";
+    private static final String FILE_DATE_FORMAT = "%02d/%02d/%d %02d:%02d";
+    private static final int NAME_INDEX = 0;
+    private static final int FROM_TO_SPLIT_INDEX = 1;
 
     /**
      * Method to trim white spaces around each array element.
@@ -146,8 +150,8 @@ public class Parser {
 
         String[] fullItemParts = fullItem.split(Pattern.quote(BY_TAG));
         trimArrayElements(fullItemParts);
-        String name = fullItemParts[0];
-        String byText = fullItemParts[1];
+        String name = fullItemParts[NAME_INDEX];
+        String byText = fullItemParts[FROM_TO_SPLIT_INDEX];
 
         if (name.isEmpty() || byText.isEmpty()) {
             throw new InvalidFormatDeadlineException();
@@ -185,11 +189,11 @@ public class Parser {
         // Get name
         String[] parts = fullItem.split(Pattern.quote(FROM_TAG));
         trimArrayElements(parts);
-        String name = parts[0];
-        String[] parts2 = parts[1].split(Pattern.quote(TO_TAG));
+        String name = parts[NAME_INDEX];
+        String[] parts2 = parts[FROM_TO_SPLIT_INDEX].split(Pattern.quote(TO_TAG));
         trimArrayElements(parts2);
-        String fromText = parts2[0];
-        String toText = parts2[1];
+        String fromText = parts2[NAME_INDEX];
+        String toText = parts2[FROM_TO_SPLIT_INDEX];
 
         if (name.isEmpty() || fromText.isEmpty() || toText.isEmpty()) {
             throw new InvalidFormatEventException();
@@ -228,8 +232,8 @@ public class Parser {
 
         String[] fullItemParts = fullItem.split(Pattern.quote(DURATION_TAG));
         trimArrayElements(fullItemParts);
-        String name = fullItemParts[0];
-        String durationText = fullItemParts[1];
+        String name = fullItemParts[NAME_INDEX];
+        String durationText = fullItemParts[FROM_TO_SPLIT_INDEX];
 
         if (name.isEmpty() || durationText.isEmpty()) {
             throw new InvalidFormatFixedDurationException();
@@ -271,6 +275,21 @@ public class Parser {
         String month = input.format(monthFormatter);
         String time = input.format(timeFormatter);
         return input.getDayOfMonth() + " " + month + " " + input.getYear() + " " + time;
+    }
+
+    /**
+     * Formats a LocalDateTime for file storage.
+     *
+     * @param dateTime The LocalDateTime to format.
+     * @return Formatted date string for file storage.
+     */
+    public static String formatDateForFile(LocalDateTime dateTime) {
+        return String.format(FILE_DATE_FORMAT,
+            dateTime.getDayOfMonth(),
+            dateTime.getMonthValue(),
+            dateTime.getYear(),
+            dateTime.getHour(),
+            dateTime.getMinute());
     }
 
     /**
