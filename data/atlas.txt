@@ -1,0 +1,4 @@
+T | false | Read books
+D | false | CS2100 Assignment 1 | 18/09/2025 13:00
+E | false | Dinner with Sam | 19/09/2025 18:00 | 19/09/2025 20:00
+F | false | Workout | 2
