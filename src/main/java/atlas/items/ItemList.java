@@ -10,7 +10,6 @@ import atlas.exceptions.InvalidFormatFixedDurationException;
 import atlas.exceptions.InvalidTaskNumberException;
 import atlas.exceptions.MissingTaskNumberException;
 import atlas.exceptions.PastDateException;
-import atlas.ui.Ui;
 import atlas.utilities.Parser;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,19 +159,16 @@ public class ItemList {
      * @param input Input given by user.
      * @return
      */
-    public String findItem(Ui ui, String input) {
+    public ItemList findItem(String input) throws EmptyTaskNameException {
+        String name = Parser.parseFind(input, itemList.size());
         ItemList output = new ItemList();
         for (int i = 0; i < itemList.size(); i++) {
             Item current = itemList.get(i);
-            if (current.getName().contains(input)) {
+            if (current.getName().contains(name)) {
                 output.loadItem(current);
             }
         }
-        if (output.listSize() == 0) {
-            return ui.printError("No matching item found!");
-        } else {
-            return ui.printMatchingList(output);
-        }
+        return output;
     }
 
     /**

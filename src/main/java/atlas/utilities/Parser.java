@@ -65,7 +65,6 @@ public class Parser {
         if (input.isEmpty()) {
             return new UnknownCommand();
         }
-
         if (input.equals("bye")) {
             return new ByeCommand();
         } else if (input.equals("list")) {
@@ -85,11 +84,7 @@ public class Parser {
         } else if (input.startsWith("fixedDuration")) {
             return new NewFixedDurationCommand(input);
         } else if (input.startsWith("find")) {
-            String searchTerm = input.substring(FIND_COMMAND_LENGTH).trim();
-            if (searchTerm.isEmpty()) {
-                return new UnknownCommand();
-            }
-            return new FindCommand(searchTerm);
+            return new FindCommand(input);
         } else {
             return new UnknownCommand();
         }
@@ -343,5 +338,18 @@ public class Parser {
             throw new InvalidTaskNumberException(size);
         }
         return number - 1;
+    }
+
+    public static String parseFind(String input, int size) throws EmptyTaskNameException {
+        if (input.length() <= FIND_COMMAND_LENGTH) {
+            throw new EmptyTaskNameException();
+        }
+        String name = input.substring(FIND_COMMAND_LENGTH).trim();
+
+        if (name.isEmpty()) {
+            throw new EmptyTaskNameException();
+        }
+
+        return name;
     }
 }

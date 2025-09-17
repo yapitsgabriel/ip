@@ -1,7 +1,8 @@
 package atlas.commands;
 
-import atlas.storage.Storage;
+import atlas.exceptions.EmptyTaskNameException;
 import atlas.items.ItemList;
+import atlas.storage.Storage;
 import atlas.ui.Ui;
 
 /**
@@ -21,6 +22,11 @@ public class FindCommand implements Command {
      * @param storage
      */
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.findItem(ui, input);
+        try {
+            ItemList foundItemList = itemList.findItem(input);
+            return ui.printMatchingList(foundItemList);
+        } catch (EmptyTaskNameException e) {
+            return ui.printError(e.getMessage());
+        }
     }
 }

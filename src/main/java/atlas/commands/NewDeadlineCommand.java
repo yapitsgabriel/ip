@@ -24,6 +24,7 @@ public class NewDeadlineCommand implements Command {
      * @param itemList the list of items to be updated
      * @param ui the user interface used to display messages
      * @param storage the storage system used to save data to
+     * @return The output string.
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {

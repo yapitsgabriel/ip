@@ -72,7 +72,7 @@ public class Ui {
         }
         StringBuilder items = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
+            items.append((i + 1)).append(". ").append(itemList.getItem(i).toString()).append("\n");
         }
         return "Here are the matching items in your list:\n" + items;
     }
