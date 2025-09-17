@@ -4,6 +4,7 @@ import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.PastDateException;
 import atlas.items.Deadline;
 import atlas.items.Event;
+import atlas.items.FixedDuration;
 import atlas.items.ItemList;
 import atlas.items.Todo;
 import atlas.ui.Ui;
@@ -79,6 +80,13 @@ public class Storage {
             } catch (InvalidDateFormatException | PastDateException e) {
                 ui.printError(e.getMessage());
             }
+        } else if (nextLine.startsWith("F")) {
+            String[] parts = nextLine.split(Pattern.quote("|"));
+            assert parts.length == 4;
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].trim();
+            }
+            itemList.loadItem(new FixedDuration(Parser.parseIsDone(parts[1]), parts[2], Integer.parseInt(parts[3])));
         }
     }
 

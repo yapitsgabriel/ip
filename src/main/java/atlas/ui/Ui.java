@@ -31,6 +31,7 @@ public class Ui {
             + "• todo <task name>\n"
             + "• deadline <task name> /by <deadline>\n"
             + "• event <task name> /from <start date> /to <end date>\n"
+            + "• fixedDuration <task name> /duration <duration in hours>\n"
             + "• mark <task number>\n"
             + "• unmark <task number>\n"
             + "• delete <task number>";

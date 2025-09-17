@@ -3,8 +3,10 @@ package atlas.items;
 import atlas.exceptions.EmptyTaskNameException;
 import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.InvalidDateRangeException;
+import atlas.exceptions.InvalidDurationException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.InvalidFormatEventException;
+import atlas.exceptions.InvalidFormatFixedDurationException;
 import atlas.exceptions.PastDateException;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
@@ -46,6 +48,7 @@ public class ItemList {
         itemList.add(newItem);
         return newItem;
     }
+
     /**
      * Creates a new deadline item.
      *
@@ -77,6 +80,20 @@ public class ItemList {
     public Item newEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException,
         InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         Item newItem = Parser.parseEvent(input);
+        itemList.add(newItem);
+        return newItem;
+    }
+
+    /**
+     * Creates a new fixed duration item.
+     *
+     * @param input Given input by user.
+     * @return A new Fixed Duration.
+     * @throws EmptyTaskNameException If item name is empty.
+     * @throws InvalidFormatFixedDurationException If format of item is invalid.
+     */
+    public Item newFixedDuration(String input) throws EmptyTaskNameException, InvalidFormatFixedDurationException, InvalidDurationException {
+        Item newItem = Parser.parseFixedDuration(input);
         itemList.add(newItem);
         return newItem;
     }

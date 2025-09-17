@@ -8,17 +8,21 @@ import atlas.commands.ListCommand;
 import atlas.commands.MarkCommand;
 import atlas.commands.NewDeadlineCommand;
 import atlas.commands.NewEventCommand;
+import atlas.commands.NewFixedDurationCommand;
 import atlas.commands.NewTodoCommand;
 import atlas.commands.UnknownCommand;
 import atlas.commands.UnmarkCommand;
 import atlas.exceptions.EmptyTaskNameException;
 import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.InvalidDateRangeException;
+import atlas.exceptions.InvalidDurationException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.InvalidFormatEventException;
+import atlas.exceptions.InvalidFormatFixedDurationException;
 import atlas.exceptions.PastDateException;
 import atlas.items.Deadline;
 import atlas.items.Event;
+import atlas.items.FixedDuration;
 import atlas.items.Item;
 import atlas.items.Todo;
 import java.time.LocalDateTime;
@@ -35,6 +39,7 @@ public class Parser {
     private static final int TODO_COMMAND_LENGTH = 5;
     private static final int DEADLINE_COMMAND_LENGTH = 9;
     private static final int EVENT_COMMAND_LENGTH = 6;
+    private static final int FIXED_DURATION_COMMAND_LENGTH = 14;
     private static final int MARK_COMMAND_LENGTH = 5;
     private static final int UNMARK_COMMAND_LENGTH = 7;
     private static final int DELETE_COMMAND_LENGTH = 7;
@@ -42,6 +47,7 @@ public class Parser {
     private static final String BY_TAG = " /by ";
     private static final String FROM_TAG = " /from ";
     private static final String TO_TAG = " /to ";
+    private static final String DURATION_TAG = " /duration ";
 
 
     private static void trimArrayElements(String[] array) {
@@ -71,6 +77,8 @@ public class Parser {
             return new NewDeadlineCommand(input);
         } else if (input.startsWith("event")) {
             return new NewEventCommand(input);
+        } else if (input.startsWith("fixedDuration")) {
+            return new NewFixedDurationCommand(input);
         } else if (input.startsWith("find")) {
             return new FindCommand(input.substring(FIND_COMMAND_LENGTH).trim());
         } else {
@@ -177,6 +185,44 @@ public class Parser {
         }
 
         return new Event(name, from, to);
+    }
+
+    /**
+     * Parses a deadline command
+     *
+     * @param input Given input by user.
+     * @return A new Deadline.
+     * @throws EmptyTaskNameException If item name is empty.
+     * @throws InvalidFormatDeadlineException If format of item is invalid.
+     * @throws InvalidDateFormatException If format of date is invalid.
+     * @throws PastDateException If date entered is before current date.
+     */
+    public static Item parseFixedDuration(String input) throws EmptyTaskNameException, InvalidFormatFixedDurationException, InvalidDurationException {
+        if (input.length() <= FIXED_DURATION_COMMAND_LENGTH) {
+            throw new EmptyTaskNameException();
+        } else if (!input.contains(DURATION_TAG)) {
+            throw new InvalidFormatFixedDurationException();
+        }
+
+        String fullItem = input.substring(FIXED_DURATION_COMMAND_LENGTH).trim();
+        if (fullItem.isEmpty()) {
+            throw new EmptyTaskNameException();
+        }
+
+        String[] fullItemParts = fullItem.split(Pattern.quote(DURATION_TAG));
+        trimArrayElements(fullItemParts);
+        String name = fullItemParts[0];
+        String durationText = fullItemParts[1];
+
+        if (name.isEmpty() || durationText.isEmpty()) {
+            throw new InvalidFormatFixedDurationException();
+        }
+        try {
+            int duration = Integer.parseInt(durationText);
+            return new FixedDuration(name, duration);
+        } catch (NumberFormatException e) {
+            throw new InvalidDurationException();
+        }
     }
 
     /**
