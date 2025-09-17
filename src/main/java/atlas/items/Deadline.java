@@ -15,7 +15,6 @@ public class Deadline extends Item {
      * @param name Name of item.
      * @param by Deadline of item.
      */
-
     public Deadline(String name, LocalDateTime by) {
         super(name);
         this.by = by;

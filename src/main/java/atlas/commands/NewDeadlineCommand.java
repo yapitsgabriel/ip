@@ -21,6 +21,7 @@ public class NewDeadlineCommand implements Command {
 
     /**
      * Executes the new deadline command.
+     *
      * @param itemList the list of items to be updated
      * @param ui the user interface used to display messages
      * @param storage the storage system used to save data to
@@ -30,7 +31,7 @@ public class NewDeadlineCommand implements Command {
     public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {
             Item item = itemList.newDeadline(input);
-            return ui.printTodo(item, itemList.listSize());
+            return ui.printItem(item, itemList.listSize());
         } catch (EmptyTaskNameException | InvalidFormatDeadlineException | InvalidDateFormatException
                 | PastDateException e) {
             return ui.printError(e.getMessage());

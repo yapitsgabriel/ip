@@ -23,6 +23,11 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Constructor for a DialogBox
+     * @param text The text that the DialogBox contains.
+     * @param img The image that appears as the avatar for the DialogBox.
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -47,10 +52,22 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Creates a User DialogBox
+     * @param text The text that the DialogBox contains.
+     * @param img The image that appears as the avatar for the DialogBox.
+     * @return A DialogBox object.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Creates an Atlas DialogBox
+     * @param text The text that the DialogBox contains.
+     * @param img The image that appears as the avatar for the DialogBox.
+     * @return A DialogBox object.
+     */
     public static DialogBox getAtlasDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

@@ -26,12 +26,19 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image atlasImage = new Image(this.getClass().getResourceAsStream("/images/DaAtlas.png"));
 
+    /**
+     * Initialise the MainWindow
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Atlas instance */
+    /**
+     * Injects the Atlas instance
+     *
+     * @param a The Atlas instance.
+     */
     public void setAtlas(Atlas a) {
         atlas = a;
         atlas.loadData();

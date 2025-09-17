@@ -28,6 +28,9 @@ import java.util.regex.Pattern;
 public class Storage {
     /**
      * Loads tasks from file to the local ItemList.
+     *
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
      * @return An ItemList with all the loaded tasks.
      * @throws IOException
      */
@@ -50,7 +53,10 @@ public class Storage {
 
     /**
      * Loads individual tasks from the file to the local ItemList.
+     *
      * @param nextLine The next line of the input file.
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
      */
     public void loadItem(String nextLine, ItemList itemList, Ui ui) {
         if (nextLine.startsWith("T")) {
@@ -64,6 +70,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads individual todos.
+     *
+     * @param nextLine The next line of the input file.
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
+     */
     public void loadTodo(String nextLine, ItemList itemList, Ui ui) {
         String[] parts = nextLine.split(Pattern.quote("|"));
         assert parts.length == 3;
@@ -79,6 +92,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads individual deadline items.
+     *
+     * @param nextLine The next line of the input file.
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
+     */
     public void loadDeadline(String nextLine, ItemList itemList, Ui ui) {
         String[] parts = nextLine.split(Pattern.quote("|"));
         assert parts.length == 4;
@@ -95,6 +115,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads individual events.
+     *
+     * @param nextLine The next line of the input file.
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
+     */
     public void loadEvent(String nextLine, ItemList itemList, Ui ui) {
         String[] parts = nextLine.split(Pattern.quote("|"));
         assert parts.length == 5;
@@ -112,6 +139,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads individual fixed duration items.
+     *
+     * @param nextLine The next line of the input file.
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
+     */
     public void loadFixedDuration(String nextLine, ItemList itemList, Ui ui) {
         String[] parts = nextLine.split(Pattern.quote("|"));
         assert parts.length == 4;
@@ -130,7 +164,9 @@ public class Storage {
 
     /**
      * Saves the itemList to the file.
-     * @param itemList The itemList to be saved.
+     *
+     * @param itemList The ItemList in which to load the items to.
+     * @param ui The Ui to display messages to.
      */
     public void save(ItemList itemList, Ui ui) {
         try {

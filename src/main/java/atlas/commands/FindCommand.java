@@ -17,9 +17,11 @@ public class FindCommand implements Command {
 
     /**
      * Executes the find command.
+     *
      * @param itemList
      * @param ui
      * @param storage
+     * @return The output string.
      */
     public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {

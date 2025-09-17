@@ -22,15 +22,17 @@ public class NewEventCommand implements Command {
 
     /**
      * Executes the new event command.
+     *
      * @param itemList the list of items to be updated
      * @param ui the user interface used to display messages
      * @param storage the storage system used to save data to
+     * @return The output string.
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {
             Item item = itemList.newEvent(input);
-            return ui.printTodo(item, itemList.listSize());
+            return ui.printItem(item, itemList.listSize());
         } catch (EmptyTaskNameException | InvalidFormatEventException | InvalidDateFormatException
                 | PastDateException | InvalidDateRangeException e) {
             return ui.printError(e.getMessage());

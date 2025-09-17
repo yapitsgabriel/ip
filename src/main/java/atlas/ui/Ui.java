@@ -24,6 +24,8 @@ public class Ui {
 
     /**
      * Returns help message.
+     *
+     * @return Help message string.
      */
     public String printHelpMenu() {
         return "I don't understand what you mean. You can try these prompts: \n"
@@ -39,12 +41,13 @@ public class Ui {
     }
 
     /**
-     * Returns a given item.
+     * Returns the confirmation message upon adding an item
      *
      * @param item Item to be printed.
      * @param listSize Current size of list.
+     * @return Confirmation message string.
      */
-    public String printTodo(Item item, int listSize) {
+    public String printItem(Item item, int listSize) {
         return "Got it! I've added this item:\n" + item.toString() + "\n"
                 + "Now you have " + listSize + " item(s) in the list.";
     }
@@ -53,6 +56,7 @@ public class Ui {
      * Returns the entire list.
      *
      * @param itemList List to be printed.
+     * @return List in string form.
      */
     public String printList(ItemList itemList) {
         int length = itemList.listSize();
@@ -66,6 +70,12 @@ public class Ui {
         return "Here are the items in your list\n" + items;
     }
 
+    /**
+     * Returns the list given (for the find command).
+     *
+     * @param itemList List to be printed.
+     * @return List in string form.
+     */
     public String printMatchingList(ItemList itemList) {
         int length = itemList.listSize();
         if (length == 0) {
@@ -78,14 +88,32 @@ public class Ui {
         return "Here are the matching items in your list:\n" + items;
     }
 
+    /**
+     * Returns the confirmation message upon deleting an item.
+     *
+     * @param item Item to be deleted.
+     * @return Confirmation message string.
+     */
     public String printDeleteItem(Item item) {
             return "Okay, I've deleted this item:\n" + item.toString();
         }
 
+    /**
+     * Returns the confirmation message upon marking an item as done.
+     *
+     * @param item Item to be marked as done.
+     * @return Confirmation message string.
+     */
     public String printMarkItemAsDone(Item item) {
         return "Okay, I've marked this item as done: \n" + item.toString();
     }
 
+    /**
+     * Returns the confirmation message upon marking an item as not done.
+     *
+     * @param item Item to be marked as not done.
+     * @return Confirmation message string.
+     */
     public String printMarkItemAsNotDone(Item item) {
         return "Okay, I've marked this item as not done yet: \n" + item.toString();
     }

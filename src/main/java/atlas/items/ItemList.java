@@ -155,9 +155,8 @@ public class ItemList {
 
     /**
      * Finds all items matching a given input.
-     * @param ui the user interface used to display messages
      * @param input Input given by user.
-     * @return
+     * @return An ItemList object with the found items.
      */
     public ItemList findItem(String input) throws EmptyTaskNameException {
         String name = Parser.parseFind(input, itemList.size());

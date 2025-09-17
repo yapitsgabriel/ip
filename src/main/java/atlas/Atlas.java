@@ -36,10 +36,21 @@ public class Atlas {
         }
     }
 
+    /**
+     * Returns the initial greeting message.
+     *
+     * @return Hello message.
+     */
     public String hello() {
         return ui.hello();
     }
 
+    /**
+     * Given a user input, get execute the command and return the relevant output.
+     *
+     * @param input User input.
+     * @return Atlas's response.
+     */
     public String getResponse(String input) {
         Command command = Parser.parseCommand(input);
         return command.execute(itemList, ui, storage);

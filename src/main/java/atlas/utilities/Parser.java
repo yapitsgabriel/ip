@@ -53,13 +53,23 @@ public class Parser {
     private static final String TO_TAG = " /to ";
     private static final String DURATION_TAG = " /duration ";
 
-
+    /**
+     * Method to trim white spaces around each array element.
+     *
+     * @param array Input array
+     */
     private static void trimArrayElements(String[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = array[i].trim();
         }
     }
 
+    /**
+     * Parse a command.
+     *
+     * @param input User input string.
+     * @return The relevant Command.
+     */
     public static Command parseCommand(String input) {
         input = input.trim();
 
@@ -199,10 +209,9 @@ public class Parser {
      *
      * @param input Given input by user.
      * @return A new Deadline.
-     * @throws EmptyTaskNameException         If item name is empty.
-     * @throws InvalidFormatDeadlineException If format of item is invalid.
-     * @throws InvalidDateFormatException     If format of date is invalid.
-     * @throws PastDateException              If date entered is before current date.
+     * @throws EmptyTaskNameException               If item name is empty.
+     * @throws InvalidFormatFixedDurationException  If format of item is invalid.
+     * @throws InvalidDurationException             If the duration given is invalid.
      */
     public static Item parseFixedDuration(String input)
         throws EmptyTaskNameException, InvalidFormatFixedDurationException, InvalidDurationException {
@@ -251,7 +260,7 @@ public class Parser {
     }
 
     /**
-     * Prints out a date in the relevant format.
+     * Returns a date in the relevant format.
      *
      * @param input LocalDateTime input.
      * @return Formatted date string.
@@ -264,6 +273,13 @@ public class Parser {
         return input.getDayOfMonth() + " " + month + " " + input.getYear() + " " + time;
     }
 
+    /**
+     * Parses an isDone String.
+     *
+     * @param isDone The isDone string.
+     * @return The relevant isDone boolean.
+     * @throws CorruptedFileException       If isDone is neither "true" nor "false".
+     */
     public static boolean parseIsDone(String isDone) throws CorruptedFileException {
         if (isDone.equals("true")) {
             return true;
@@ -274,6 +290,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a markAsDone command.
+     *
+     * @param input User input.
+     * @param size Size of list.
+     * @return Index of the item.
+     * @throws InvalidTaskNumberException   If number is not valid (e.g. not an integer / negative / more than size).
+     * @throws MissingTaskNumberException   If number is missing.
+     */
     public static int parseMarkAsDone(String input, int size)
         throws InvalidTaskNumberException, MissingTaskNumberException {
         if (input.length() <= MARK_COMMAND_LENGTH) {
@@ -297,6 +322,15 @@ public class Parser {
         return number - 1;
     }
 
+    /**
+     * Parses a markAsNotDone command.
+     *
+     * @param input User input.
+     * @param size Size of list.
+     * @return Index of the item.
+     * @throws InvalidTaskNumberException   If number is not valid (e.g. not an integer / negative / more than size).
+     * @throws MissingTaskNumberException   If number is missing.
+     */
     public static int parseMarkAsNotDone(String input, int size)
         throws InvalidTaskNumberException, MissingTaskNumberException {
         if (input.length() <= UNMARK_COMMAND_LENGTH) {
@@ -320,6 +354,15 @@ public class Parser {
         return number - 1;
     }
 
+    /**
+     * Parses a delete command.
+     *
+     * @param input User input.
+     * @param size Size of list.
+     * @return Index of the item.
+     * @throws InvalidTaskNumberException   If number is not valid (e.g. not an integer / negative / more than size).
+     * @throws MissingTaskNumberException   If number is missing.
+     */
     public static int parseDelete(String input, int size)
         throws InvalidTaskNumberException, MissingTaskNumberException {
         if (input.length() <= DELETE_COMMAND_LENGTH) {
@@ -343,6 +386,14 @@ public class Parser {
         return number - 1;
     }
 
+    /**
+     * Parses a find command.
+     *
+     * @param input User input.
+     * @param size Size of list.
+     * @return Name of item.
+     * @throws EmptyTaskNameException   If task name is empty.
+     */
     public static String parseFind(String input, int size) throws EmptyTaskNameException {
         if (input.length() <= FIND_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
@@ -356,10 +407,17 @@ public class Parser {
         return name;
     }
 
-    public static int parseDuration(String input) throws InvalidDurationException {
+    /**
+     * Parses an duration String.
+     *
+     * @param duration The duration string.
+     * @return The relevant isDone boolean.
+     * @throws InvalidDurationException         If the duration given is invalid.
+     */
+    public static int parseDuration(String duration) throws InvalidDurationException {
         int number;
         try {
-            number = Integer.parseInt(input);
+            number = Integer.parseInt(duration);
         } catch (NumberFormatException e) {
             throw new InvalidDurationException();
         }

@@ -18,15 +18,17 @@ public class NewTodoCommand implements Command {
 
     /**
      * Executes the new todo command.
+     *
      * @param itemList the list of items to be updated
      * @param ui the user interface used to display messages
      * @param storage the storage system used to save data to
+     * @return The output string.
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
         try {
             Item item = itemList.newTodo(input);
-            return ui.printTodo(item, itemList.listSize());
+            return ui.printItem(item, itemList.listSize());
         } catch (EmptyTaskNameException e) {
             return ui.printError(e.getMessage());
         }

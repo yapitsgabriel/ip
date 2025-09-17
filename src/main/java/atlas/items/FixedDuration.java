@@ -12,7 +12,6 @@ public class FixedDuration extends Item {
      * @param name Name of item.
      * @param duration Duration of item
      */
-
     public FixedDuration(String name, int duration) {
         super(name);
         this.duration = duration;
