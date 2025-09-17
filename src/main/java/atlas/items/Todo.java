@@ -20,7 +20,7 @@ public class Todo extends Item {
      * @param isDone Completion status of item.
      * @param name Name of item.
      */
-    public Todo(int isDone, String name) {
+    public Todo(boolean isDone, String name) {
         super(isDone, name);
     }
 

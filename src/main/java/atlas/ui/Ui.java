@@ -56,27 +56,24 @@ public class Ui {
         int length = itemList.listSize();
         if (length == 0) {
             return "There are no items in your list. Enjoy your day!";
-        } else {
-            StringBuilder items = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
-            }
-            return "Here are the items in your list\n" + items;
-
         }
+        StringBuilder items = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
+        }
+        return "Here are the items in your list\n" + items;
     }
 
     public String printMatchingList(ItemList itemList) {
         int length = itemList.listSize();
         if (length == 0) {
             return "There are no items matching your search :(";
-        } else {
-            StringBuilder items = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
-            }
-            return "Here are the matching items in your list:\n" + items;
         }
+        StringBuilder items = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            items.append((i + 1) + ". " + itemList.getItem(i).toString() + "\n");
+        }
+        return "Here are the matching items in your list:\n" + items;
     }
 
     public String printDeleteItem(Item item) {

@@ -55,7 +55,7 @@ public class Storage {
             for (int i = 0; i < parts.length; i++) {
                 parts[i] = parts[i].trim();
             }
-            itemList.loadItem(new Todo(Integer.parseInt(parts[1]), parts[2]));
+            itemList.loadItem(new Todo(Parser.parseIsDone(parts[1]), parts[2]));
         } else if (nextLine.startsWith("D")) {
             String[] parts = nextLine.split(Pattern.quote("|"));
             assert parts.length == 4;
@@ -63,7 +63,7 @@ public class Storage {
                 parts[i] = parts[i].trim();
             }
             try {
-                itemList.loadItem(new Deadline(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3])));
+                itemList.loadItem(new Deadline(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3])));
             } catch (InvalidDateFormatException | PastDateException e) {
                 ui.printError(e.getMessage());
             }
@@ -75,7 +75,7 @@ public class Storage {
                 parts[i] = parts[i].trim();
             }
             try {
-                itemList.loadItem(new Event(Integer.parseInt(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
+                itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
             } catch (InvalidDateFormatException | PastDateException e) {
                 ui.printError(e.getMessage());
             }

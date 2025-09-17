@@ -32,12 +32,6 @@ import java.util.regex.Pattern;
  * Helps with translating user input into commands.
  */
 public class Parser {
-
-    /**
-     * Turns a command by the user into a Command object.
-     * @param input Given input by the user.
-     * @return A command object.
-     */
     private static final int TODO_COMMAND_LENGTH = 5;
     private static final int DEADLINE_COMMAND_LENGTH = 9;
     private static final int EVENT_COMMAND_LENGTH = 6;
@@ -45,6 +39,9 @@ public class Parser {
     private static final int UNMARK_COMMAND_LENGTH = 7;
     private static final int DELETE_COMMAND_LENGTH = 7;
     private static final int FIND_COMMAND_LENGTH = 5;
+    private static final String BY_TAG = " /by ";
+    private static final String FROM_TAG = " /from ";
+    private static final String TO_TAG = " /to ";
 
 
     private static void trimArrayElements(String[] array) {
@@ -114,22 +111,19 @@ public class Parser {
     public static Item parseDeadline(String input) throws EmptyTaskNameException, InvalidFormatDeadlineException, InvalidDateFormatException, PastDateException {
         if (input.length() <= DEADLINE_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
-        } else if (!input.contains(" /by ")) {
+        } else if (!input.contains(BY_TAG)) {
             throw new InvalidFormatDeadlineException();
         }
 
-        // Get full item
-        String item = input.substring(DEADLINE_COMMAND_LENGTH).trim();
-        if (item.isEmpty()) {
+        String fullItem = input.substring(DEADLINE_COMMAND_LENGTH).trim();
+        if (fullItem.isEmpty()) {
             throw new EmptyTaskNameException();
         }
 
-        // Get name
-        String[] parts = item.split(Pattern.quote(" /by "));
-        trimArrayElements(parts);
-
-        String name = parts[0];
-        String byText = parts[1];
+        String[] fullItemParts = fullItem.split(Pattern.quote(BY_TAG));
+        trimArrayElements(fullItemParts);
+        String name = fullItemParts[0];
+        String byText = fullItemParts[1];
 
         if (name.isEmpty() || byText.isEmpty()) {
             throw new InvalidFormatDeadlineException();
@@ -154,23 +148,21 @@ public class Parser {
     public static Item parseEvent(String input) throws EmptyTaskNameException, InvalidFormatEventException, InvalidDateFormatException, PastDateException, InvalidDateRangeException {
         if (input.length() <= EVENT_COMMAND_LENGTH) {
             throw new EmptyTaskNameException();
-        } else if (!(input.contains(" /from ") && input.contains(" /to "))) {
+        } else if (!(input.contains(FROM_TAG) && input.contains(TO_TAG))) {
             throw new InvalidFormatEventException();
         }
 
-        // Get full item
-        String item = input.substring(EVENT_COMMAND_LENGTH).trim();
-        if (item.isEmpty()) {
+        String fullItem = input.substring(EVENT_COMMAND_LENGTH).trim();
+        if (fullItem.isEmpty()) {
             throw new EmptyTaskNameException();
         }
 
         // Get name
-        String[] parts = item.split(Pattern.quote(" /from "));
+        String[] parts = fullItem.split(Pattern.quote(FROM_TAG));
         trimArrayElements(parts);
         String name = parts[0];
-        String[] parts2 = parts[1].split(Pattern.quote(" /to "));
+        String[] parts2 = parts[1].split(Pattern.quote(TO_TAG));
         trimArrayElements(parts2);
-
         String fromText = parts2[0];
         String toText = parts2[1];
 
@@ -180,7 +172,6 @@ public class Parser {
 
         LocalDateTime from = parseDate(fromText);
         LocalDateTime to = parseDate(toText);
-
         if (from.isAfter(to)) {
             throw new InvalidDateRangeException();
         }
@@ -219,5 +210,9 @@ public class Parser {
         String month = input.format(monthFormatter);
         String time = input.format(timeFormatter);
         return input.getDayOfMonth() + " " + month + " " + input.getYear() + " " + time;
+    }
+
+    public static boolean parseIsDone(String number) {
+        return number.equals("1");
     }
 }

@@ -31,7 +31,7 @@ public class Event extends Item {
      * @param from Start date of item.
      * @param to End date of item.
      */
-    public Event(int isDone, String name, LocalDateTime from, LocalDateTime to) {
+    public Event(boolean isDone, String name, LocalDateTime from, LocalDateTime to) {
         super(isDone, name);
         this.from = from;
         this.to = to;

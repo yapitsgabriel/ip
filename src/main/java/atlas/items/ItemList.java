@@ -126,11 +126,10 @@ public class ItemList {
     public String deleteItem(Ui ui, int index) {
         if (index < 0 || index > itemList.size() - 1) {
             return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
-        } else {
-            String deleteMessage = ui.printDeleteItem(itemList.get(index));
-            itemList.remove(index);
-            return deleteMessage;
         }
+        String deleteMessage = ui.printDeleteItem(itemList.get(index));
+        itemList.remove(index);
+        return deleteMessage;
     }
 
     /**
