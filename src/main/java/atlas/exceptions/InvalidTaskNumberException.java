@@ -1,10 +1,10 @@
 package atlas.exceptions;
 
 /**
- * Represents an exception thrown for task numbers that are invalid (e.g. negative / more than total number).
+ * Represents an exception thrown for commands where the task number provided is invalid.
  */
 public class InvalidTaskNumberException extends Exception {
-    public InvalidTaskNumberException() {
-        super("Please enter a valid task number.");
+    public InvalidTaskNumberException(int size) {
+        super("Please provide a task number between 1 and " + size + ". ");
     }
 }

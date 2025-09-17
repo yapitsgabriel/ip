@@ -76,7 +76,8 @@ public class Storage {
                 parts[i] = parts[i].trim();
             }
             try {
-                itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]), Parser.parseDate(parts[4])));
+                itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]),
+                        Parser.parseDate(parts[4])));
             } catch (InvalidDateFormatException | PastDateException e) {
                 ui.printError(e.getMessage());
             }
@@ -101,13 +102,10 @@ public class Storage {
                 f.write(itemList.getItem(i).fileFormat() + "\n");
             }
             f.close();
-            Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(Path.of("data/atlas_temp.txt"), Path.of("data/atlas.txt"),
+                    StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             ui.printError(e.getMessage());
         }
-
-
     }
-
-
 }

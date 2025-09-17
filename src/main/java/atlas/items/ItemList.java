@@ -7,6 +7,8 @@ import atlas.exceptions.InvalidDurationException;
 import atlas.exceptions.InvalidFormatDeadlineException;
 import atlas.exceptions.InvalidFormatEventException;
 import atlas.exceptions.InvalidFormatFixedDurationException;
+import atlas.exceptions.InvalidTaskNumberException;
+import atlas.exceptions.MissingTaskNumberException;
 import atlas.exceptions.PastDateException;
 import atlas.ui.Ui;
 import atlas.utilities.Parser;
@@ -108,55 +110,55 @@ public class ItemList {
     }
 
     /**
-     * Marks item as done.
+     * Marks an item as done.
      *
-     * @param index Index of item to be marked.
+     * @param input Given input by user.
+     * @return The marked item
+     * @throws MissingTaskNumberException If task number is missing.
+     * @throws InvalidTaskNumberException If task number is invalid.
      */
-    public String markItemAsDone(Ui ui, int index) {
-        if (index < 0 || index > itemList.size() - 1) {
-            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
-        } else {
-            itemList.get(index).markAsDone();
-            return ui.printMarkItemAsDone(itemList.get(index));
-        }
+    public Item markItemAsDone(String input) throws MissingTaskNumberException, InvalidTaskNumberException {
+        int index = Parser.parseMarkAsDone(input, itemList.size());
+        Item item = itemList.get(index);
+        item.markAsDone();
+        return item;
     }
 
     /**
-     * Marks item as done.
+     * Marks an item as not done.
      *
-     * @param index Index of item to be marked.
+     * @param input Given input by user.
+     * @return The unmarked item
+     * @throws MissingTaskNumberException If task number is missing.
+     * @throws InvalidTaskNumberException If task number is invalid.
      */
-    public String markItemAsNotDone(Ui ui, int index) {
-        if (index < 0 || index > itemList.size() - 1) {
-            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
-        } else {
-            itemList.get(index).markAsNotDone();
-            return ui.printMarkItemAsNotDone(itemList.get(index));
-        }
+    public Item markItemAsNotDone(String input) throws MissingTaskNumberException, InvalidTaskNumberException {
+        int index = Parser.parseMarkAsNotDone(input, itemList.size());
+        Item item = itemList.get(index);
+        item.markAsNotDone();
+        return item;
     }
 
     /**
-     * Deletes item.
+     * Deletes the item.
      *
-     * @param index Index of item to be deleted.
+     * @param input Given input by user.
+     * @return The deleted item
+     * @throws MissingTaskNumberException If task number is missing.
+     * @throws InvalidTaskNumberException If task number is invalid.
      */
-    public String deleteItem(Ui ui, int index) {
-        if (index < 0 || index > itemList.size() - 1) {
-            return ui.printError("Invalid number! Please choose a number between 1 and " + itemList.size());
-        }
-        String deleteMessage = ui.printDeleteItem(itemList.get(index));
-        itemList.remove(index);
-        return deleteMessage;
+    public Item deleteItem(String input) throws MissingTaskNumberException, InvalidTaskNumberException {
+        int index = Parser.parseDelete(input, itemList.size());
+        Item item = itemList.get(index);
+        itemList.remove(item);
+        return item;
     }
 
-    /**
-     * Returns list size.
-     *
-     * @return Size of list.
-     */
     /**
      * Finds all items matching a given input.
+     * @param ui the user interface used to display messages
      * @param input Input given by user.
+     * @return
      */
     public String findItem(Ui ui, String input) {
         ItemList output = new ItemList();
@@ -173,9 +175,15 @@ public class ItemList {
         }
     }
 
+    /**
+     * Returns list size.
+     *
+     * @return Size of list.
+     */
     public int listSize() {
         return itemList.size();
     }
+
     /**
      * Gets a certain item from the list.
      *

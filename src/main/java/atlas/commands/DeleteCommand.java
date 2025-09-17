@@ -1,5 +1,8 @@
 package atlas.commands;
 
+import atlas.exceptions.InvalidTaskNumberException;
+import atlas.exceptions.MissingTaskNumberException;
+import atlas.items.Item;
 import atlas.storage.Storage;
 import atlas.items.ItemList;
 import atlas.ui.Ui;
@@ -8,20 +11,25 @@ import atlas.ui.Ui;
  * Represents the command to delete an Item from itemList
  */
 public class DeleteCommand implements Command {
-    private int index;
+    private String input;
 
-    public DeleteCommand(int index) {
-        this.index = index;
+    public DeleteCommand(String input) {
+        this.input = input;
     }
 
     /**
      * Executes the delete command.
+     *
      * @param itemList the list of items from which the item is deleted
      * @param ui the user interface used to display messages
      * @param storage the storage system used to save data to
      */
     @Override
     public String execute(ItemList itemList, Ui ui, Storage storage) {
-        return itemList.deleteItem(ui, index);
-    }
+        try {
+            Item item = itemList.deleteItem(input);
+            return ui.printDeleteItem(item);
+        } catch (InvalidTaskNumberException | MissingTaskNumberException e) {
+            return ui.printError(e.getMessage());
+        }    }
 }
