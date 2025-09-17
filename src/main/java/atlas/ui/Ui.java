@@ -28,13 +28,14 @@ public class Ui {
     public String printHelpMenu() {
         return "I don't understand what you mean. You can try these prompts: \n"
             + "• list\n"
-            + "• todo <task name>\n"
-            + "• deadline <task name> /by <deadline>\n"
-            + "• event <task name> /from <start date> /to <end date>\n"
-            + "• fixedDuration <task name> /duration <duration in hours>\n"
-            + "• mark <task number>\n"
-            + "• unmark <task number>\n"
-            + "• delete <task number>";
+            + "• todo <name>\n"
+            + "• deadline <name> /by <deadline>\n"
+            + "• event <name> /from <start date> /to <end date>\n"
+            + "• fixedDuration <name> /duration <duration in hours>\n"
+            + "• mark <item number>\n"
+            + "• unmark <item number>\n"
+            + "• delete <item number>"
+            + "• find <search string>";
     }
 
     /**
