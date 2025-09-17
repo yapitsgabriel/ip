@@ -40,8 +40,12 @@ public class Deadline extends Item {
      */
     @Override
     public String fileFormat() {
-        String date = String.format("%02d", by.getDayOfMonth()) + "/" + by.getMonthValue() + "/" + by.getYear() + " "
-            + by.getHour() + ":" + by.getMinute();
+        String date = String.format("%02d/%02d/%d %02d:%02d",
+            by.getDayOfMonth(),
+            by.getMonthValue(),
+            by.getYear(),
+            by.getHour(),
+            by.getMinute());
         return "D | " + getIsDone() + " | " + getName() + " | " + date;
     }
 

@@ -1,6 +1,8 @@
 package atlas.storage;
 
+import atlas.exceptions.CorruptedFileException;
 import atlas.exceptions.InvalidDateFormatException;
+import atlas.exceptions.InvalidDurationException;
 import atlas.exceptions.PastDateException;
 import atlas.items.Deadline;
 import atlas.items.Event;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -67,7 +70,13 @@ public class Storage {
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
         }
-        itemList.loadItem(new Todo(Parser.parseIsDone(parts[1]), parts[2]));
+        try {
+            boolean isDone = Parser.parseIsDone(parts[1]);
+            String name = parts[2];
+            itemList.loadItem(new Todo(isDone, name));
+        } catch(CorruptedFileException e) {
+            ui.printError(e.getMessage());
+        }
     }
 
     public void loadDeadline(String nextLine, ItemList itemList, Ui ui) {
@@ -77,8 +86,11 @@ public class Storage {
             parts[i] = parts[i].trim();
         }
         try {
-            itemList.loadItem(new Deadline(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3])));
-        } catch (InvalidDateFormatException | PastDateException e) {
+            boolean isDone = Parser.parseIsDone(parts[1]);
+            String name = parts[2];
+            LocalDateTime date = Parser.parseDate(parts[3]);
+            itemList.loadItem(new Deadline(isDone, name, date));
+        } catch (InvalidDateFormatException | PastDateException | CorruptedFileException e) {
             ui.printError(e.getMessage());
         }
     }
@@ -90,9 +102,12 @@ public class Storage {
             parts[i] = parts[i].trim();
         }
         try {
-            itemList.loadItem(new Event(Parser.parseIsDone(parts[1]), parts[2], Parser.parseDate(parts[3]),
-                Parser.parseDate(parts[4])));
-        } catch (InvalidDateFormatException | PastDateException e) {
+            boolean isDone = Parser.parseIsDone(parts[1]);
+            String name = parts[2];
+            LocalDateTime start = Parser.parseDate(parts[3]);
+            LocalDateTime end = Parser.parseDate(parts[4]);
+            itemList.loadItem(new Event(isDone, name, start, end));
+        } catch (InvalidDateFormatException | PastDateException | CorruptedFileException e) {
             ui.printError(e.getMessage());
         }
     }
@@ -103,7 +118,14 @@ public class Storage {
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
         }
-        itemList.loadItem(new FixedDuration(Parser.parseIsDone(parts[1]), parts[2], Integer.parseInt(parts[3])));
+        try {
+            boolean isDone = Parser.parseIsDone(parts[1]);
+            String name = parts[2];
+            int duration = Parser.parseDuration(parts[3]);
+            itemList.loadItem(new FixedDuration(isDone, name, duration));
+        } catch (InvalidDurationException | CorruptedFileException e) {
+            ui.printError(e.getMessage());
+        }
     }
 
     /**

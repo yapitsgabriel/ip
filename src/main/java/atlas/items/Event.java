@@ -44,10 +44,18 @@ public class Event extends Item {
      */
     @Override
     public String fileFormat() {
-        String fromDate = String.format("%02d", from.getDayOfMonth()) + "/" + from.getMonthValue() + "/" + from.getYear() + " "
-            + from.getHour() + ":" + from.getMinute();
-        String toDate = String.format("%02d", to.getDayOfMonth()) + "/" + to.getMonthValue() + "/" + to.getYear() + " " + to.getHour()
-            + ":" + to.getMinute();
+        String fromDate = String.format("%02d/%02d/%d %02d:%02d",
+            from.getDayOfMonth(),
+            from.getMonthValue(),
+            from.getYear(),
+            from.getHour(),
+            from.getMinute());
+        String toDate = String.format("%02d/%02d/%d %02d:%02d",
+            to.getDayOfMonth(),
+            to.getMonthValue(),
+            to.getYear(),
+            to.getHour(),
+            to.getMinute());
         return "E | " + getIsDone() + " | " + getName() + " | " + fromDate + " | " + toDate;
     }
 

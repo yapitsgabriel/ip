@@ -12,6 +12,7 @@ import atlas.commands.NewFixedDurationCommand;
 import atlas.commands.NewTodoCommand;
 import atlas.commands.UnknownCommand;
 import atlas.commands.UnmarkCommand;
+import atlas.exceptions.CorruptedFileException;
 import atlas.exceptions.EmptyTaskNameException;
 import atlas.exceptions.InvalidDateFormatException;
 import atlas.exceptions.InvalidDateRangeException;
@@ -263,8 +264,14 @@ public class Parser {
         return input.getDayOfMonth() + " " + month + " " + input.getYear() + " " + time;
     }
 
-    public static boolean parseIsDone(String number) {
-        return number.equals("1");
+    public static boolean parseIsDone(String isDone) throws CorruptedFileException {
+        if (isDone.equals("true")) {
+            return true;
+        } else if (isDone.equals("false")) {
+            return false;
+        } else {
+            throw new CorruptedFileException();
+        }
     }
 
     public static int parseMarkAsDone(String input, int size)
