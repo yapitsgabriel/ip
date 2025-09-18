@@ -1,4 +1,4 @@
-# Atlas User Guide
+    # Atlas User Guide
 
 ![Atlas Screenshot](Ui.png)
 
